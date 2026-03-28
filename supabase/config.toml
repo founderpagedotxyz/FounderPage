@@ -1,0 +1,13 @@
+project_id = "cgucjkudqgpjmnuewnyw"
+
+[functions.sitemap]
+verify_jwt = false
+
+[functions.stripe-connect]
+verify_jwt = false
+
+[functions.stripe-connect-callback]
+verify_jwt = false
+
+[functions.sync-revenue]
+verify_jwt = false
