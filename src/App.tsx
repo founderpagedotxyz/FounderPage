@@ -14,6 +14,14 @@ import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
 import Support from "./pages/Support";
+import About from "./pages/About";
+import Blog from "./pages/Blog";
+import Changelog from "./pages/Changelog";
+import Features from "./pages/Features";
+import PricingPage from "./pages/PricingPage";
+import Examples from "./pages/Examples";
+import Privacy from "./pages/Privacy";
+import Terms from "./pages/Terms";
 
 const queryClient = new QueryClient();
 
@@ -33,6 +41,14 @@ const App = () => (
             <Route path="/admin" element={<Admin />} />
             <Route path="/reset-password" element={<ResetPassword />} />
             <Route path="/support" element={<Support />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/blog" element={<Blog />} />
+            <Route path="/changelog" element={<Changelog />} />
+            <Route path="/features" element={<Features />} />
+            <Route path="/pricing" element={<PricingPage />} />
+            <Route path="/examples" element={<Examples />} />
+            <Route path="/privacy" element={<Privacy />} />
+            <Route path="/terms" element={<Terms />} />
             <Route path="/:username" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

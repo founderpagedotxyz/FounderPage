@@ -11,7 +11,11 @@
       "Bash(nslookup founderpage.xyz 8.8.8.8)",
       "Bash(nslookup founderpage.xyz 1.1.1.1)",
       "Bash(dig founderpage.xyz @1.1.1.1 +short)",
-      "Bash(nslookup -type=AAAA founderpage.xyz 1.1.1.1)"
+      "Bash(nslookup -type=AAAA founderpage.xyz 1.1.1.1)",
+      "Bash(supabase functions:*)",
+      "Bash(where supabase:*)",
+      "Read(//c/Users/enman/AppData/Roaming/npm/**)",
+      "Read(//c/Users/enman/.supabase/**)"
     ]
   }
 }

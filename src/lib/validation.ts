@@ -44,6 +44,8 @@ export const RESERVED_USERNAMES = [
   "startups",
   "leaderboards",
   "pricing",
+  "features",
+  "examples",
 ];
 
 export const usernameSchema = z
