@@ -1,4 +1,5 @@
 import { useTranslation } from "react-i18next";
+import { Link } from "react-router-dom";
 
 const Footer = () => {
   const { t } = useTranslation();
@@ -10,11 +11,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Brand */}
           <div className="col-span-1 md:col-span-2">
-            <div className="flex items-center gap-2 mb-4">
-              <div className="font-bold text-lg">
-                <img src="/logo.svg" alt="Logo" className="w-56 h-auto"/>
-              </div>
-            </div>
+            <Link to="/" className="flex items-center gap-2 mb-4">
+              <img src="/logo.svg" alt="Logo" className="w-56 h-auto"/>
+            </Link>
             <p className="text-muted-foreground text-sm max-w-md">
               {t("footer.description")}
             </p>
@@ -24,26 +23,10 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">{t("footer.product")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.features")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.pricing")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.examples")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.changelog")}
-                </a>
-              </li>
+              <li><Link to="/features" className="hover:text-foreground transition-colors">{t("footer.features")}</Link></li>
+              <li><Link to="/pricing" className="hover:text-foreground transition-colors">{t("footer.pricing")}</Link></li>
+              <li><Link to="/examples" className="hover:text-foreground transition-colors">{t("footer.examples")}</Link></li>
+              <li><Link to="/changelog" className="hover:text-foreground transition-colors">{t("footer.changelog")}</Link></li>
             </ul>
           </div>
 
@@ -51,26 +34,10 @@ const Footer = () => {
           <div>
             <h3 className="font-semibold mb-4">{t("footer.company")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.about")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.blog")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.privacy")}
-                </a>
-              </li>
-              <li>
-                <a href="#" className="hover:text-foreground transition-colors">
-                  {t("footer.terms")}
-                </a>
-              </li>
+              <li><Link to="/about" className="hover:text-foreground transition-colors">{t("footer.about")}</Link></li>
+              <li><Link to="/blog" className="hover:text-foreground transition-colors">{t("footer.blog")}</Link></li>
+              <li><Link to="/privacy" className="hover:text-foreground transition-colors">{t("footer.privacy")}</Link></li>
+              <li><Link to="/terms" className="hover:text-foreground transition-colors">{t("footer.terms")}</Link></li>
             </ul>
           </div>
         </div>
@@ -82,15 +49,7 @@ const Footer = () => {
               {t("footer.copyright", { year: currentYear })}
             </p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
-              <a href="#" className="hover:text-foreground transition-colors">
-                Twitter
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
-                GitHub
-              </a>
-              <a href="#" className="hover:text-foreground transition-colors">
-                Discord
-              </a>
+              <Link to="/support" className="hover:text-foreground transition-colors">Support</Link>
             </div>
           </div>
         </div>
