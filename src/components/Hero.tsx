@@ -120,7 +120,7 @@ const Hero = () => {
                   className="h-14 text-lg pl-[180px] bg-card border-2 placeholder:text-lg"
                 />
               </div>
-              <motion.div whileHover={{ scale: 1.05 }}>
+              <motion.div>
                 <Button onClick={handleClaim} size="lg" className="h-14 px-8 text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap transition-all">
                   {t("hero.claimBtn")}
                 </Button>
@@ -397,7 +397,7 @@ const Hero = () => {
                   <Input type="text" placeholder={t("hero.placeholder")} value={username} onChange={(e) => setUsername(e.target.value)} className="h-14 text-lg pl-[180px] bg-card border-2 placeholder:text-lg" />
                 </div>
               </div>
-              <motion.div whileHover={{ scale: 1.05 }}>
+              <motion.div>
                 <Button onClick={handleClaim} size="lg" className="h-14 px-8 text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap">{t("hero.claimBtn")}</Button>
               </motion.div>
             </div>
