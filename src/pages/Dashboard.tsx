@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { FileText, LogOut, Plus, ExternalLink, Trash2, Pencil, Palette, Shield, Loader2, BarChart3 } from "lucide-react";
+import { FileText, LogOut, Plus, ExternalLink, Trash2, Pencil, Palette, Shield, Loader2, BarChart3, Copy, Check } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -54,6 +54,7 @@ const Dashboard = () => {
   const [theme, setTheme] = useState<ThemeKey>("default");
   const [fontFamily, setFontFamily] = useState<FontKey>("dm-sans");
   
+  const [copied, setCopied] = useState(false);
   const [editingStartupId, setEditingStartupId] = useState<string | null>(null);
   const [startupName, setStartupName] = useState("");
   const [startupDescription, setStartupDescription] = useState("");
@@ -321,8 +322,8 @@ const Dashboard = () => {
                 </Button>
               )}
               {profile && (
-                <Button variant="outline" size="sm" onClick={() => navigate(`/${profile.username}`)}>
-                  <ExternalLink className="w-4 h-4 mr-2" /> {t("dashboard.viewPublic")}
+                <Button variant="outline" size="sm" onClick={() => window.open(`/${profile.username}`, "_blank")}>
+                  <ExternalLink className="w-4 h-4 mr-2" /> {t("dashboard.viewMyPage")}
                 </Button>
               )}
               <LanguageSelector />
@@ -335,7 +336,35 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8">{t("dashboard.title")}</h1>
+        <h1 className="text-3xl font-bold mb-4">{t("dashboard.title")}</h1>
+
+        {profile && (
+          <div className="flex items-center gap-2 mb-8 p-3 rounded-lg bg-muted/50 border border-border">
+            <span className="text-sm text-muted-foreground shrink-0">{t("dashboard.yourLink")}:</span>
+            <code className="text-sm font-medium flex-1 truncate">founderpage.xyz/{profile.username}</code>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="shrink-0 h-8 px-3"
+              onClick={() => {
+                navigator.clipboard.writeText(`https://founderpage.xyz/${profile.username}`);
+                setCopied(true);
+                toast.success(t("dashboard.linkCopied"));
+                setTimeout(() => setCopied(false), 2000);
+              }}
+            >
+              {copied ? <Check className="w-4 h-4 text-accent" /> : <Copy className="w-4 h-4" />}
+            </Button>
+            <Button
+              variant="ghost"
+              size="sm"
+              className="shrink-0 h-8 px-3"
+              onClick={() => window.open(`/${profile.username}`, "_blank")}
+            >
+              <ExternalLink className="w-4 h-4" />
+            </Button>
+          </div>
+        )}
 
         <Tabs defaultValue="page" className="mb-8">
           <TabsList className="grid w-full grid-cols-3 mb-6">
