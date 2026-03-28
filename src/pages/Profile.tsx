@@ -181,14 +181,6 @@ const Profile = () => {
         <link rel="canonical" href={`https://founderpage.xyz/${profile?.username}`} />
         {profile.favicon_url && <link rel="icon" href={profile.favicon_url} />}
       </Helmet>
-      <header style={{ borderBottom: `1px solid hsl(${themeStyles["--profile-muted"]})` }}>
-        <div className="container mx-auto px-4 py-4">
-          <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <span className="font-bold text-lg">{t("common.founderPage")}</span>
-          </div>
-        </div>
-      </header>
-
       <main className="container mx-auto px-4 py-12 max-w-5xl">
         {/* Profile Header */}
         <div className="flex flex-col md:flex-row gap-8 mb-12">
@@ -310,20 +302,23 @@ const Profile = () => {
           </div>
         )}
 
-        {/* Build Your Page CTA */}
-        <div className="mt-16 text-center">
-          <Button
-            size="lg"
-            style={{
-              backgroundColor: `hsl(${themeStyles["--profile-accent"]})`,
-              color: `hsl(${themeStyles["--profile-background"]})`,
-            }}
-            onClick={() => navigate("/auth")}
-          >
-            {t("profile.buildPage")}
-          </Button>
-        </div>
       </main>
+
+      {/* Small CTA at bottom */}
+      <div className="fixed bottom-4 left-4 z-50">
+        <a
+          href="/"
+          className="inline-flex items-center gap-2 px-4 py-2 rounded-full text-sm font-medium shadow-lg transition-all hover:scale-105"
+          style={{
+            backgroundColor: `hsl(${themeStyles["--profile-card"]})`,
+            color: `hsl(${themeStyles["--profile-foreground"]})`,
+            border: `1px solid hsl(${themeStyles["--profile-muted"]})`,
+          }}
+        >
+          <img src="/favicon.ico" alt="" className="w-4 h-4" />
+          {t("profile.buildPage")}
+        </a>
+      </div>
     </div>
   );
 };
