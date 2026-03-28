@@ -149,7 +149,10 @@ const Dashboard = () => {
   };
 
   const handleUpdateProfile = async () => {
-    if (!profile) return;
+    if (!profile) {
+      toast.error("No profile loaded");
+      return;
+    }
 
     const cleanUsername = (username || profile.username).toLowerCase().trim();
 
@@ -158,10 +161,9 @@ const Dashboard = () => {
         toast.error(t("dashboard.reservedUsername"));
         return;
       }
-      try {
-        usernameSchema.parse(cleanUsername);
-      } catch (error: any) {
-        toast.error(error.errors[0]?.message || "Invalid format");
+      const result = usernameSchema.safeParse(cleanUsername);
+      if (!result.success) {
+        toast.error(result.error.errors[0]?.message || "Invalid format");
         return;
       }
 
@@ -177,25 +179,27 @@ const Dashboard = () => {
       }
     }
 
-    const updateData: Record<string, any> = {
-      username: cleanUsername,
-      name: name.trim() || null,
-      bio: bio.trim() || null,
-      location: location.trim() || null,
-      photo_url: photoUrl || null,
-      favicon_url: faviconUrl || null,
-      theme: theme,
-      font_family: fontFamily,
-    };
-
-    const { error } = await supabase
+    const { error, data, count } = await supabase
       .from("profiles")
-      .update(updateData)
-      .eq("id", profile.id);
+      .update({
+        username: cleanUsername,
+        name: name.trim() || null,
+        bio: bio.trim() || null,
+        location: location.trim() || null,
+        photo_url: photoUrl || null,
+        favicon_url: faviconUrl || null,
+        theme: theme,
+        font_family: fontFamily,
+      })
+      .eq("id", profile.id)
+      .select();
 
     if (error) {
       console.error("Profile update error:", error);
-      toast.error(t("dashboard.failedUpdate"));
+      toast.error(error.message || t("dashboard.failedUpdate"));
+    } else if (!data || data.length === 0) {
+      console.error("No rows updated - RLS may be blocking");
+      toast.error("Update failed - please try logging out and back in");
     } else {
       toast.success(t("dashboard.profileUpdated"));
       setEditMode(false);
