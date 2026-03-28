@@ -257,6 +257,18 @@
     "noData": "No revenue data",
     "label": "Revenue"
   },
+  "stats": {
+    "title": "Stats",
+    "uniqueVisitors": "Unique Visitors",
+    "totalViews": "Total Views",
+    "clicks": "Clicks",
+    "source": "Source",
+    "visitorsOverTime": "Visitors Over Time",
+    "days7": "7 days",
+    "days30": "30 days",
+    "days90": "90 days",
+    "noData": "No data yet. Share your profile to start tracking!"
+  },
   "founders": {
     "title": "Meet Our Founders",
     "subtitle": "Entrepreneurs building in public and sharing their journey",

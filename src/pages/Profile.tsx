@@ -61,6 +61,9 @@ const Profile = () => {
     if (profileData) {
       setProfile(profileData);
 
+      // Track page view
+      trackPageView(profileData.id);
+
       const { data: startupsData } = await supabase
         .from("startups")
         .select("*")
@@ -91,6 +94,34 @@ const Profile = () => {
     }
 
     setLoading(false);
+  };
+
+  const trackPageView = async (profileId: string) => {
+    try {
+      // Generate a simple visitor hash from user agent + date (anonymous, no PII)
+      const raw = navigator.userAgent + new Date().toDateString();
+      const hash = Array.from(new TextEncoder().encode(raw))
+        .reduce((h, b) => ((h << 5) - h + b) | 0, 0)
+        .toString(36);
+
+      await supabase.from("page_views" as any).insert({
+        profile_id: profileId,
+        visitor_hash: hash,
+        referrer: document.referrer || null,
+        path: window.location.pathname,
+      });
+    } catch (_) {}
+  };
+
+  const trackClick = async (profileId: string, startupId: string | null, url: string) => {
+    try {
+      await supabase.from("link_clicks" as any).insert({
+        profile_id: profileId,
+        startup_id: startupId,
+        url,
+      });
+    } catch (_) {}
+    window.open(url, "_blank", "noopener,noreferrer");
   };
 
   if (loading) {
@@ -256,16 +287,14 @@ const Profile = () => {
                 {/* Website Link */}
                 {startup.url && (
                   <div className="mt-4 pt-4" style={{ borderTop: `1px solid hsl(${themeStyles["--profile-muted"]})` }}>
-                    <a
-                      href={startup.url}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 text-sm transition-colors"
+                    <button
+                      onClick={() => trackClick(profile.id, startup.id, startup.url!)}
+                      className="inline-flex items-center gap-2 text-sm transition-colors hover:opacity-80 cursor-pointer"
                       style={{ color: `hsl(${themeStyles["--profile-foreground"]} / 0.6)` }}
                     >
                       <ExternalLink className="w-4 h-4" />
                       {startup.url.replace(/^https?:\/\//, '').replace(/\/$/, '')}
-                    </a>
+                    </button>
                   </div>
                 )}
               </CardContent>

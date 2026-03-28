@@ -257,6 +257,18 @@
     "noData": "Sin datos de ingresos",
     "label": "Ingresos"
   },
+  "stats": {
+    "title": "Estadísticas",
+    "uniqueVisitors": "Visitantes Únicos",
+    "totalViews": "Visitas Totales",
+    "clicks": "Clics",
+    "source": "Fuente",
+    "visitorsOverTime": "Visitantes a lo largo del tiempo",
+    "days7": "7 días",
+    "days30": "30 días",
+    "days90": "90 días",
+    "noData": "Sin datos aún. ¡Comparte tu perfil para empezar a rastrear!"
+  },
   "founders": {
     "title": "Conoce a Nuestros Fundadores",
     "subtitle": "Emprendedores construyendo en público y compartiendo su camino",

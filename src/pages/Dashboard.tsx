@@ -9,7 +9,7 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
 import { toast } from "sonner";
-import { FileText, LogOut, Plus, ExternalLink, Trash2, Pencil, Palette, Shield, Loader2 } from "lucide-react";
+import { FileText, LogOut, Plus, ExternalLink, Trash2, Pencil, Palette, Shield, Loader2, BarChart3 } from "lucide-react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -28,6 +28,8 @@ import { StripeConnect } from "@/components/StripeConnect";
 import { usernameSchema, profileSchema, RESERVED_USERNAMES } from "@/lib/validation";
 import { ThemeSelector, ThemeKey, FontKey } from "@/components/ThemeSelector";
 import { LanguageSelector } from "@/components/LanguageSelector";
+import { StatsPanel } from "@/components/StatsPanel";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 type Startup = Database["public"]["Tables"]["startups"]["Row"];
@@ -284,6 +286,39 @@ const Dashboard = () => {
       <main className="container mx-auto px-4 py-8 max-w-4xl">
         <h1 className="text-3xl font-bold mb-8">{t("dashboard.title")}</h1>
 
+        <Tabs defaultValue="page" className="mb-8">
+          <TabsList className="grid w-full grid-cols-3 mb-6">
+            <TabsTrigger value="page" className="flex items-center gap-2">
+              <FileText className="w-4 h-4" /> {t("dashboard.yourProfile")}
+            </TabsTrigger>
+            <TabsTrigger value="stats" className="flex items-center gap-2">
+              <BarChart3 className="w-4 h-4" /> {t("stats.title")}
+            </TabsTrigger>
+            <TabsTrigger value="style" className="flex items-center gap-2">
+              <Palette className="w-4 h-4" /> {t("dashboard.pageCustomization")}
+            </TabsTrigger>
+          </TabsList>
+
+          <TabsContent value="stats">
+            {profile && <StatsPanel profileId={profile.id} />}
+          </TabsContent>
+
+          <TabsContent value="style">
+            <Card>
+              <CardHeader>
+                <CardTitle>{t("dashboard.pageCustomization")}</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} />
+                <div className="mt-6">
+                  <Button onClick={handleUpdateProfile}>{t("common.save")}</Button>
+                </div>
+              </CardContent>
+            </Card>
+          </TabsContent>
+
+          <TabsContent value="page">
+
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
@@ -386,6 +421,9 @@ const Dashboard = () => {
             )}
           </CardContent>
         </Card>
+
+          </TabsContent>
+        </Tabs>
       </main>
     </div>
   );

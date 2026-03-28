@@ -257,6 +257,18 @@
     "noData": "Sem dados de receita",
     "label": "Receita"
   },
+  "stats": {
+    "title": "Estatísticas",
+    "uniqueVisitors": "Visitantes Únicos",
+    "totalViews": "Visualizações Totais",
+    "clicks": "Cliques",
+    "source": "Fonte",
+    "visitorsOverTime": "Visitantes ao longo do tempo",
+    "days7": "7 dias",
+    "days30": "30 dias",
+    "days90": "90 dias",
+    "noData": "Sem dados ainda. Partilha o teu perfil para começar a rastrear!"
+  },
   "founders": {
     "title": "Conhece os Nossos Fundadores",
     "subtitle": "Empreendedores a construir em público e a partilhar o seu percurso",
