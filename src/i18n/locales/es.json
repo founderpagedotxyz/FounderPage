@@ -97,7 +97,9 @@
     "passwordMin": "La contraseña debe tener al menos 8 caracteres",
     "passwordUpper": "La contraseña debe contener al menos una letra mayúscula",
     "passwordLower": "La contraseña debe contener al menos una letra minúscula",
-    "passwordNumber": "La contraseña debe contener al menos un número"
+    "passwordNumber": "La contraseña debe contener al menos un número",
+    "continueGoogle": "Continuar con Google",
+    "orEmail": "o continúa con email"
   },
   "resetPassword": {
     "verifying": "Verificando enlace de recuperación...",

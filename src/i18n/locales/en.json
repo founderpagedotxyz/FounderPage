@@ -97,7 +97,9 @@
     "passwordMin": "Password must be at least 8 characters",
     "passwordUpper": "Password must contain at least one uppercase letter",
     "passwordLower": "Password must contain at least one lowercase letter",
-    "passwordNumber": "Password must contain at least one number"
+    "passwordNumber": "Password must contain at least one number",
+    "continueGoogle": "Continue with Google",
+    "orEmail": "or continue with email"
   },
   "resetPassword": {
     "verifying": "Verifying recovery link...",

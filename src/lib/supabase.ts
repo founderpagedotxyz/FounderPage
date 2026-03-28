@@ -37,6 +37,17 @@ export const getCurrentUser = async (): Promise<User | null> => {
   return user;
 };
 
+export const signInWithGoogle = async () => {
+  const { data, error } = await supabase.auth.signInWithOAuth({
+    provider: "google",
+    options: {
+      redirectTo: `${window.location.origin}/dashboard`,
+    },
+  });
+
+  return { data, error };
+};
+
 export const resetPassword = async (email: string) => {
   const redirectUrl = `${window.location.origin}/reset-password`;
   
