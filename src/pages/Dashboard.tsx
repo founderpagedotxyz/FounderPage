@@ -96,20 +96,49 @@ const Dashboard = () => {
 
       if (profileError) throw profileError;
 
-      if (profileData) {
-        setProfile(profileData);
-        setName(profileData.name || "");
-        setBio(profileData.bio || "");
-        setLocation(profileData.location || "");
-        setPhotoUrl(profileData.photo_url || "");
-        setFaviconUrl(profileData.favicon_url || "");
-        setUsername(profileData.username || "");
+      let activeProfile = profileData;
 
-        const rawTheme = profileData.theme;
+      // If no profile exists (e.g. Google OAuth), create one
+      if (!activeProfile) {
+        const meta = user.user_metadata || {};
+        const autoUsername = (meta.name || meta.full_name || user.email?.split("@")[0] || "user")
+          .toLowerCase().replace(/[^a-z0-9]/g, "") + "_" + user.id.slice(0, 8);
+
+        const { data: newProfile, error: createError } = await supabase
+          .from("profiles")
+          .insert({
+            id: user.id,
+            email: user.email,
+            username: autoUsername,
+            name: meta.full_name || meta.name || null,
+            photo_url: meta.avatar_url || meta.picture || null,
+          })
+          .select()
+          .single();
+
+        if (createError) {
+          console.error("Failed to create profile:", createError);
+          toast.error("Failed to create profile: " + createError.message);
+          setLoading(false);
+          return;
+        }
+        activeProfile = newProfile;
+      }
+
+      if (activeProfile) {
+        setProfile(activeProfile);
+        setName(activeProfile.name || "");
+        setBio(activeProfile.bio || "");
+        setLocation(activeProfile.location || "");
+        setPhotoUrl(activeProfile.photo_url || "");
+        setFaviconUrl(activeProfile.favicon_url || "");
+        setUsername(activeProfile.username || "");
+
+        const rawTheme = activeProfile.theme;
         const safeTheme = (rawTheme === "theme-light" || !rawTheme) ? "default" : rawTheme;
         setTheme(safeTheme as ThemeKey);
 
-        const rawFont = profileData.font_family;
+        const rawFont = activeProfile.font_family;
         const safeFont = (rawFont === "font-sans" || !rawFont) ? "dm-sans" : rawFont;
         setFontFamily(safeFont as FontKey);
       }
