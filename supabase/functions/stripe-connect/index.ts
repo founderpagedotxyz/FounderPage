@@ -57,7 +57,7 @@ serve(async (req) => {
     const stripe = new Stripe(stripeKey, { apiVersion: "2025-08-27.basil" });
 
     // Create OAuth link for Stripe Connect Express
-    const origin = req.headers.get("origin") || "https://id-preview--79a2eddf-a106-4071-b4ab-211b2b7e1683.lovable.app";
+    const origin = req.headers.get("origin") || "https://founderpage.xyz";
     
     const accountLink = await stripe.accountLinks.create({
       account: await createOrGetConnectedAccount(stripe, userData.user.email!, startup.name),

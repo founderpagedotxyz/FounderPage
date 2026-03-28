@@ -30,7 +30,7 @@ export default function Leaderboards() {
 
   const loadLeaderboard = async () => {
     try {
-      // Get profiles with their startup counts and total revenue
+      // Get profiles with their startups (only those showing income publicly)
       const { data: profiles, error } = await supabase
         .from("profiles")
         .select(`
@@ -39,25 +39,31 @@ export default function Leaderboards() {
           photo_url,
           startups (
             id,
-            monthly_income
+            monthly_income,
+            show_income
           )
         `)
         .not("username", "is", null);
 
       if (error) throw error;
 
-      // Calculate rankings based on startups count and revenue
+      // Calculate rankings — only count startups with public revenue
       const ranked = (profiles || [])
-        .map((profile: any) => ({
-          username: profile.username,
-          name: profile.name,
-          photo_url: profile.photo_url,
-          startups_count: profile.startups?.length || 0,
-          total_revenue: profile.startups?.reduce(
-            (sum: number, s: any) => sum + (s.monthly_income || 0),
-            0
-          ) || 0,
-        }))
+        .map((profile: any) => {
+          const publicStartups = profile.startups?.filter(
+            (s: any) => s.show_income && (s.monthly_income || 0) > 0
+          ) || [];
+          return {
+            username: profile.username,
+            name: profile.name,
+            photo_url: profile.photo_url,
+            startups_count: profile.startups?.length || 0,
+            total_revenue: publicStartups.reduce(
+              (sum: number, s: any) => sum + (s.monthly_income || 0),
+              0
+            ),
+          };
+        })
         .filter((p) => p.startups_count > 0)
         .sort((a, b) => {
           // Sort by revenue first, then by startups count
@@ -108,8 +114,8 @@ export default function Leaderboards() {
             <ArrowLeft className="w-4 h-4" />
             <span>{t("leaderboards.backHome")}</span>
           </Link>
-          <Link to="/" className="text-xl font-bold">
-            {t("common.founderPage")}
+          <Link to="/" className="flex items-center">
+            <img src="/logo.svg" alt="Founder Page" className="w-36 h-auto" />
           </Link>
         </div>
       </header>
