@@ -255,5 +255,11 @@
   "revenue": {
     "noData": "Sin datos de ingresos",
     "label": "Ingresos"
+  },
+  "founders": {
+    "title": "Conoce a Nuestros Fundadores",
+    "subtitle": "Emprendedores construyendo en público y compartiendo su camino",
+    "startupCount_one": "{{count}} startup",
+    "startupCount_other": "{{count}} startups"
   }
 }

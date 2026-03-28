@@ -6,6 +6,7 @@ import { useTranslation } from "react-i18next";
 import { Rocket, TrendingUp, Verified, Check, Zap, Shield, Trophy, Search, Sparkles } from "lucide-react";
 import { WavyBackground } from "@/components/ui/wavy-background";
 import { motion } from "framer-motion";
+import { FeaturedFounders } from "@/components/FeaturedFounders";
 
 // --- PEGA TUS ENLACES DE STRIPE AQUÍ ---
 const STRIPE_LINKS = {
@@ -146,6 +147,9 @@ const Hero = () => {
           </motion.div>
         </motion.div>
       </WavyBackground>
+
+      {/* --- FEATURED FOUNDERS --- */}
+      <FeaturedFounders />
 
       {/* --- HOW IT WORKS --- */}
       <section className="px-4 py-32 bg-card/50 overflow-hidden relative">
