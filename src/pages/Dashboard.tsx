@@ -151,7 +151,8 @@ const Dashboard = () => {
   const handleUpdateProfile = async () => {
     if (!profile) return;
 
-    const cleanUsername = username.toLowerCase().trim();
+    const cleanUsername = (username || profile.username).toLowerCase().trim();
+
     if (cleanUsername !== profile.username) {
       if (RESERVED_USERNAMES.includes(cleanUsername)) {
         toast.error(t("dashboard.reservedUsername"));
@@ -176,21 +177,24 @@ const Dashboard = () => {
       }
     }
 
+    const updateData: Record<string, any> = {
+      username: cleanUsername,
+      name: name.trim() || null,
+      bio: bio.trim() || null,
+      location: location.trim() || null,
+      photo_url: photoUrl || null,
+      favicon_url: faviconUrl || null,
+      theme: theme,
+      font_family: fontFamily,
+    };
+
     const { error } = await supabase
       .from("profiles")
-      .update({
-        username: cleanUsername,
-        name: name.trim() || null,
-        bio: bio.trim() || null,
-        location: location.trim() || null,
-        photo_url: photoUrl || null,
-        favicon_url: faviconUrl || null,
-        theme: theme,
-        font_family: fontFamily,
-      })
+      .update(updateData)
       .eq("id", profile.id);
 
     if (error) {
+      console.error("Profile update error:", error);
       toast.error(t("dashboard.failedUpdate"));
     } else {
       toast.success(t("dashboard.profileUpdated"));
