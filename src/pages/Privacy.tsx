@@ -23,7 +23,7 @@ const Privacy = () => {
           <img
             src="/logo.svg"
             alt="Founder Page"
-            className="h-8 w-auto cursor-pointer"
+            className="w-56 h-auto cursor-pointer"
             onClick={() => navigate("/")}
           />
         </div>

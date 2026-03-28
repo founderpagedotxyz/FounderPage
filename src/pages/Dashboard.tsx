@@ -103,8 +103,11 @@ const Dashboard = () => {
       // If no profile exists (e.g. Google OAuth), create one
       if (!activeProfile) {
         const meta = user.user_metadata || {};
-        const autoUsername = (meta.name || meta.full_name || user.email?.split("@")[0] || "user")
+        const claimedUsername = localStorage.getItem("claimedUsername");
+        const fallbackUsername = (meta.name || meta.full_name || user.email?.split("@")[0] || "user")
           .toLowerCase().replace(/[^a-z0-9]/g, "") + "_" + user.id.slice(0, 8);
+        const autoUsername = claimedUsername || fallbackUsername;
+        if (claimedUsername) localStorage.removeItem("claimedUsername");
 
         const { data: newProfile, error: createError } = await supabase
           .from("profiles")

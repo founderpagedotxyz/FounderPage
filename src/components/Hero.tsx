@@ -20,6 +20,9 @@ const Hero = () => {
   const navigate = useNavigate();
 
   const handleClaim = () => {
+    if (username.trim()) {
+      localStorage.setItem("claimedUsername", username.trim().toLowerCase());
+    }
     navigate("/auth");
   };
 

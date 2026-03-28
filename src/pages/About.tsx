@@ -42,7 +42,7 @@ const About = () => {
             <span>Back</span>
           </button>
           <div className="cursor-pointer" onClick={() => navigate("/")}>
-            <img src="/logo.svg" alt="Founder Page" className="w-40 h-auto" />
+            <img src="/logo.svg" alt="Founder Page" className="w-56 h-auto" />
           </div>
         </div>
       </header>

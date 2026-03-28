@@ -86,7 +86,7 @@ const NewStartup = () => {
       <header className="border-b border-border">
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <img src="/logo.svg" className="w-36 h-auto"/>
+            <img src="/logo.svg" className="w-56 h-auto"/>
           </div>
         </div>
       </header>
@@ -95,7 +95,7 @@ const NewStartup = () => {
         <Button
           variant="ghost"
           className="mb-6"
-          onClick={() => navigate("/dashboard")}
+          onClick={() => navigate(-1)}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           {t("newStartup.backToDashboard")}
