@@ -274,6 +274,22 @@
     "days90": "90 días",
     "noData": "Sin datos aún. ¡Comparte tu perfil para empezar a rastrear!"
   },
+  "subscribe": {
+    "placeholder": "Tu correo electrónico",
+    "btn": "Suscribirme",
+    "thanks": "¡Gracias por suscribirte!",
+    "alreadySubscribed": "¡Ya estás suscrito!",
+    "error": "Algo salió mal. Inténtalo de nuevo.",
+    "success": "¡Suscrito con éxito!"
+  },
+  "support": {
+    "title": "Soporte Prioritario",
+    "description": "¿Necesitas ayuda? Envíanos un mensaje y te responderemos lo antes posible.",
+    "subjectPlaceholder": "Asunto",
+    "messagePlaceholder": "¿Cómo podemos ayudarte?",
+    "sendBtn": "Enviar Mensaje",
+    "sent": "¡Mensaje enviado! Te responderemos pronto."
+  },
   "founders": {
     "title": "Conoce a Nuestros Fundadores",
     "subtitle": "Emprendedores construyendo en público y compartiendo su camino",

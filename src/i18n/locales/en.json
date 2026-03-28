@@ -274,6 +274,22 @@
     "days90": "90 days",
     "noData": "No data yet. Share your profile to start tracking!"
   },
+  "subscribe": {
+    "placeholder": "Enter your email",
+    "btn": "Subscribe",
+    "thanks": "Thanks for subscribing!",
+    "alreadySubscribed": "You're already subscribed!",
+    "error": "Something went wrong. Try again.",
+    "success": "Subscribed successfully!"
+  },
+  "support": {
+    "title": "Priority Support",
+    "description": "Need help? Send us a message and we'll get back to you as soon as possible.",
+    "subjectPlaceholder": "Subject",
+    "messagePlaceholder": "How can we help?",
+    "sendBtn": "Send Message",
+    "sent": "Message sent! We'll get back to you soon."
+  },
   "founders": {
     "title": "Meet Our Founders",
     "subtitle": "Entrepreneurs building in public and sharing their journey",

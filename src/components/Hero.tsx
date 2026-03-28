@@ -281,61 +281,91 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
-            {/* 1-Year Pass */}
-            <motion.div 
-              whileHover={{ y: -8 }}
-              className="bg-card rounded-[2rem] p-10 border border-border shadow-sm flex flex-col items-center text-center transition-all duration-300"
-            >
-              <div className="mb-6">
-                <h3 className="text-2xl font-bold text-foreground">{t("hero.yearlyPlan")}</h3>
-                <p className="text-muted-foreground">{t("hero.yearlyDesc")}</p>
-              </div>
-              <div className="my-8">
-                 <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg text-muted-foreground line-through">€35</span>
-                    <span className="text-6xl font-black text-foreground tracking-tight">€25</span>
-                 </div>
-                 <p className="text-sm text-muted-foreground mt-2">{t("hero.yearlyPeriod")}</p>
-              </div>
-              <Button 
-                onClick={() => handleBuy(STRIPE_LINKS.YEARLY)} 
-                variant="outline" 
-                size="lg" 
-                className="w-full h-16 text-lg font-bold border-2 rounded-xl mt-auto hover:bg-accent hover:text-white hover:border-accent transition-all"
-              >
-                {t("hero.yearlyBtn")}
-              </Button>
-            </motion.div>
+          {(() => {
+            const allFeatures = [
+              t("hero.featureAnalytics"),
+              t("hero.featureStripe"),
+              t("hero.featureSEOIndex"),
+              t("hero.featureThemes"),
+              t("hero.featureLeaderboardAccess"),
+              t("hero.featureEmail"),
+              t("hero.featureSupport"),
+              t("hero.featureUpdates"),
+            ];
+            return (
+              <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 items-stretch">
+                {/* 1-Year Pass */}
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="bg-card rounded-[2rem] p-10 border border-border shadow-sm flex flex-col items-center text-center transition-all duration-300"
+                >
+                  <div className="mb-4">
+                    <h3 className="text-2xl font-bold text-foreground">{t("hero.yearlyPlan")}</h3>
+                    <p className="text-muted-foreground">{t("hero.yearlyDesc")}</p>
+                  </div>
+                  <div className="my-6">
+                     <div className="flex items-center justify-center gap-2">
+                        <span className="text-lg text-muted-foreground line-through">€35</span>
+                        <span className="text-6xl font-black text-foreground tracking-tight">€25</span>
+                     </div>
+                     <p className="text-sm text-muted-foreground mt-2">{t("hero.yearlyPeriod")}</p>
+                  </div>
+                  <div className="w-full mb-6 space-y-2 text-left">
+                    {allFeatures.map((feat, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="bg-accent p-0.5 rounded-full"><Check className="w-3 h-3 text-white" /></div>
+                        <span className="text-sm text-muted-foreground">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    onClick={() => handleBuy(STRIPE_LINKS.YEARLY)}
+                    variant="outline"
+                    size="lg"
+                    className="w-full h-16 text-lg font-bold border-2 rounded-xl mt-auto hover:bg-accent hover:text-white hover:border-accent transition-all"
+                  >
+                    {t("hero.yearlyBtn")}
+                  </Button>
+                </motion.div>
 
-            {/* Lifetime Deal */}
-            <motion.div 
-              whileHover={{ y: -8 }}
-              className="bg-card rounded-[2rem] p-10 border-2 border-accent shadow-2xl shadow-accent/10 flex flex-col items-center text-center relative transition-all duration-300"
-            >
-              <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white px-6 py-2 rounded-full font-bold text-sm tracking-wide shadow-lg flex items-center gap-2">
-                <Sparkles className="w-4 h-4" /> {t("hero.lifetimeBadge")}
+                {/* Lifetime Deal */}
+                <motion.div
+                  whileHover={{ y: -8 }}
+                  className="bg-card rounded-[2rem] p-10 border-2 border-accent shadow-2xl shadow-accent/10 flex flex-col items-center text-center relative transition-all duration-300"
+                >
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-accent text-white px-6 py-2 rounded-full font-bold text-sm tracking-wide shadow-lg flex items-center gap-2">
+                    <Sparkles className="w-4 h-4" /> {t("hero.lifetimeBadge")}
+                  </div>
+                  <div className="mb-4 mt-2">
+                    <h3 className="text-2xl font-bold text-foreground">{t("hero.lifetimePlan")}</h3>
+                    <p className="text-muted-foreground">{t("hero.lifetimeDesc")}</p>
+                  </div>
+                  <div className="my-6">
+                     <div className="flex items-center justify-center gap-2">
+                        <span className="text-lg text-muted-foreground line-through">€50</span>
+                        <span className="text-6xl font-black text-accent tracking-tight">€30</span>
+                     </div>
+                     <p className="text-sm text-muted-foreground mt-2">{t("hero.lifetimePeriod")}</p>
+                  </div>
+                  <div className="w-full mb-6 space-y-2 text-left">
+                    {allFeatures.map((feat, i) => (
+                      <div key={i} className="flex items-center gap-2">
+                        <div className="bg-accent p-0.5 rounded-full"><Check className="w-3 h-3 text-white" /></div>
+                        <span className="text-sm text-muted-foreground">{feat}</span>
+                      </div>
+                    ))}
+                  </div>
+                  <Button
+                    onClick={() => handleBuy(STRIPE_LINKS.LIFETIME)}
+                    size="lg"
+                    className="w-full h-16 text-lg font-bold rounded-xl mt-auto bg-accent hover:bg-accent/90 text-white shadow-lg shadow-accent/25 transition-all"
+                  >
+                    {t("hero.lifetimeBtn")}
+                  </Button>
+                </motion.div>
               </div>
-              <div className="mb-6 mt-2">
-                <h3 className="text-2xl font-bold text-foreground">{t("hero.lifetimePlan")}</h3>
-                <p className="text-muted-foreground">{t("hero.lifetimeDesc")}</p>
-              </div>
-              <div className="my-8">
-                 <div className="flex items-center justify-center gap-2">
-                    <span className="text-lg text-muted-foreground line-through">€50</span>
-                    <span className="text-6xl font-black text-accent tracking-tight">€30</span>
-                 </div>
-                 <p className="text-sm text-muted-foreground mt-2">{t("hero.lifetimePeriod")}</p>
-              </div>
-              <Button 
-                onClick={() => handleBuy(STRIPE_LINKS.LIFETIME)} 
-                size="lg" 
-                className="w-full h-16 text-lg font-bold rounded-xl mt-auto bg-accent hover:bg-accent/90 text-white shadow-lg shadow-accent/25 transition-all"
-              >
-                {t("hero.lifetimeBtn")}
-              </Button>
-            </motion.div>
-          </div>
+            );
+          })()}
         </div>
       </section>
 

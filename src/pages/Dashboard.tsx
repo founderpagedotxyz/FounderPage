@@ -25,6 +25,7 @@ import type { Database } from "@/integrations/supabase/types";
 import { ImageUpload } from "@/components/ImageUpload";
 import { RevenueChart } from "@/components/RevenueChart";
 import { StripeConnect } from "@/components/StripeConnect";
+import { SupportWidget } from "@/components/SupportWidget";
 import { usernameSchema, profileSchema, RESERVED_USERNAMES } from "@/lib/validation";
 import { ThemeSelector, ThemeKey, FontKey } from "@/components/ThemeSelector";
 import { LanguageSelector } from "@/components/LanguageSelector";
@@ -505,6 +506,7 @@ const Dashboard = () => {
           </TabsContent>
         </Tabs>
       </main>
+      <SupportWidget />
     </div>
   );
 };

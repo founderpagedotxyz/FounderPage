@@ -274,6 +274,22 @@
     "days90": "90 dias",
     "noData": "Sem dados ainda. Partilha o teu perfil para começar a rastrear!"
   },
+  "subscribe": {
+    "placeholder": "O teu email",
+    "btn": "Subscrever",
+    "thanks": "Obrigado por te subscreveres!",
+    "alreadySubscribed": "Já estás subscrito!",
+    "error": "Algo correu mal. Tenta novamente.",
+    "success": "Subscrito com sucesso!"
+  },
+  "support": {
+    "title": "Suporte Prioritário",
+    "description": "Precisas de ajuda? Envia-nos uma mensagem e responderemos o mais rápido possível.",
+    "subjectPlaceholder": "Assunto",
+    "messagePlaceholder": "Como podemos ajudar?",
+    "sendBtn": "Enviar Mensagem",
+    "sent": "Mensagem enviada! Responderemos em breve."
+  },
   "founders": {
     "title": "Conhece os Nossos Fundadores",
     "subtitle": "Empreendedores a construir em público e a partilhar o seu percurso",

@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { MapPin, ExternalLink, FileText } from "lucide-react";
 import type { Database } from "@/integrations/supabase/types";
 import { RevenueChart } from "@/components/RevenueChart";
+import { EmailSubscribe } from "@/components/EmailSubscribe";
 import { RESERVED_USERNAMES } from "@/lib/validation";
 import { getThemeStyles, getFontImportUrl, type ThemeKey, type FontKey } from "@/components/ThemeSelector";
 
@@ -213,6 +214,7 @@ const Profile = () => {
             {profile.bio && (
               <p className="text-lg mb-6">{profile.bio}</p>
             )}
+            <EmailSubscribe profileId={profile.id} themeStyles={themeStyles} />
           </div>
         </div>
 
