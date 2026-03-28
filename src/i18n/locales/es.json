@@ -274,6 +274,28 @@
     "days90": "90 días",
     "noData": "Sin datos aún. ¡Comparte tu perfil para empezar a rastrear!"
   },
+  "supportPage": {
+    "title": "Soporte",
+    "subtitle": "Tienes una pregunta, encontraste un bug o necesitas ayuda? Estamos aqui para ti.",
+    "emailUs": "Escribenos directamente",
+    "responseTime": "Normalmente respondemos en 24 horas",
+    "formTitle": "Envianos un mensaje",
+    "formDesc": "Rellena el formulario y te responderemos lo antes posible.",
+    "yourEmail": "Tu correo electronico",
+    "category": "Categoria",
+    "selectCategory": "Selecciona una categoria",
+    "catBug": "Reporte de Bug",
+    "catHelp": "Ayuda / Pregunta",
+    "catFeedback": "Feedback",
+    "catOther": "Otro",
+    "subject": "Asunto",
+    "subjectPlaceholder": "Descripcion breve de tu problema",
+    "message": "Mensaje",
+    "messagePlaceholder": "Cuentanos mas sobre tu problema o pregunta...",
+    "sendBtn": "Enviar Mensaje",
+    "fillAll": "Por favor, rellena todos los campos",
+    "sent": "Mensaje enviado! Te responderemos pronto."
+  },
   "subscribe": {
     "placeholder": "Tu correo electrónico",
     "btn": "Suscribirme",

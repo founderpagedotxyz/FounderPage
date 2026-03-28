@@ -13,6 +13,7 @@ import Leaderboards from "./pages/Leaderboards";
 import Admin from "./pages/Admin";
 import ResetPassword from "./pages/ResetPassword";
 import NotFound from "./pages/NotFound";
+import Support from "./pages/Support";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +32,7 @@ const App = () => (
             <Route path="/leaderboards" element={<Leaderboards />} />
             <Route path="/admin" element={<Admin />} />
             <Route path="/reset-password" element={<ResetPassword />} />
+            <Route path="/support" element={<Support />} />
             <Route path="/:username" element={<Profile />} />
             <Route path="*" element={<NotFound />} />
           </Routes>

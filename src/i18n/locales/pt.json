@@ -274,6 +274,28 @@
     "days90": "90 dias",
     "noData": "Sem dados ainda. Partilha o teu perfil para começar a rastrear!"
   },
+  "supportPage": {
+    "title": "Suporte",
+    "subtitle": "Tens uma pergunta, encontraste um bug ou precisas de ajuda? Estamos aqui para ti.",
+    "emailUs": "Envia-nos um email diretamente",
+    "responseTime": "Normalmente respondemos em 24 horas",
+    "formTitle": "Envia-nos uma mensagem",
+    "formDesc": "Preenche o formulario e responderemos o mais rapido possivel.",
+    "yourEmail": "O teu email",
+    "category": "Categoria",
+    "selectCategory": "Seleciona uma categoria",
+    "catBug": "Reporte de Bug",
+    "catHelp": "Ajuda / Pergunta",
+    "catFeedback": "Feedback",
+    "catOther": "Outro",
+    "subject": "Assunto",
+    "subjectPlaceholder": "Descricao breve do teu problema",
+    "message": "Mensagem",
+    "messagePlaceholder": "Conta-nos mais sobre o teu problema ou pergunta...",
+    "sendBtn": "Enviar Mensagem",
+    "fillAll": "Por favor, preenche todos os campos",
+    "sent": "Mensagem enviada! Responderemos em breve."
+  },
   "subscribe": {
     "placeholder": "O teu email",
     "btn": "Subscrever",

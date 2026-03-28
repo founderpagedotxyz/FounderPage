@@ -19,7 +19,7 @@ export const SupportWidget = () => {
     setSending(true);
 
     // Send via mailto as a simple solution
-    const mailtoUrl = `mailto:support@founderpage.xyz?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
+    const mailtoUrl = `mailto:founderpage.xyz@gmail.com?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(message)}`;
     window.open(mailtoUrl, "_blank");
 
     toast.success(t("support.sent"));
