@@ -16,7 +16,8 @@
   "header": {
     "leaderboards": "Classificação",
     "pricing": "Preços",
-    "login": "ENTRAR"
+    "login": "ENTRAR",
+    "signup": "REGISTAR"
   },
   "hero": {
     "badge": "Founder Page está em desenvolvimento ativo",

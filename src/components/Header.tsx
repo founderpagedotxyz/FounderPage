@@ -49,6 +49,12 @@ const Header = () => {
             >
               {t("header.login")}
             </Button>
+            <Button
+              onClick={() => navigate("/auth")}
+              className="bg-accent hover:bg-accent/90 text-accent-foreground font-semibold"
+            >
+              {t("header.signup")}
+            </Button>
           </div>
 
         </div>

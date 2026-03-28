@@ -16,7 +16,8 @@
   "header": {
     "leaderboards": "Leaderboards",
     "pricing": "Pricing",
-    "login": "LOG IN"
+    "login": "LOG IN",
+    "signup": "SIGN UP"
   },
   "hero": {
     "badge": "Founder Page is under active development",
