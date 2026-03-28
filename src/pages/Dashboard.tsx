@@ -199,6 +199,20 @@ const Dashboard = () => {
     }
   };
 
+  const handleSaveStyle = async () => {
+    if (!profile) return;
+    const { error } = await supabase
+      .from("profiles")
+      .update({ theme, font_family: fontFamily })
+      .eq("id", profile.id);
+    if (error) {
+      toast.error(t("dashboard.failedUpdate"));
+    } else {
+      toast.success(t("dashboard.profileUpdated"));
+      loadUserData();
+    }
+  };
+
   const handleSignOut = async () => {
     await signOut();
     navigate("/");
@@ -311,7 +325,7 @@ const Dashboard = () => {
               <CardContent>
                 <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} />
                 <div className="mt-6">
-                  <Button onClick={handleUpdateProfile}>{t("common.save")}</Button>
+                  <Button onClick={handleSaveStyle}>{t("common.save")}</Button>
                 </div>
               </CardContent>
             </Card>
