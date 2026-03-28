@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
@@ -137,10 +138,11 @@ export const ThemeSelector = ({
   onThemeChange,
   onFontChange,
 }: ThemeSelectorProps) => {
+  const { t } = useTranslation();
   return (
     <div className="space-y-6">
       <div className="space-y-3">
-        <Label className="text-base font-medium">Theme</Label>
+        <Label className="text-base font-medium">{t("theme.label")}</Label>
         <RadioGroup
           value={selectedTheme}
           onValueChange={(value) => onThemeChange(value as ThemeKey)}
@@ -179,10 +181,10 @@ export const ThemeSelector = ({
       </div>
 
       <div className="space-y-3">
-        <Label className="text-base font-medium">Font Family</Label>
+        <Label className="text-base font-medium">{t("theme.fontLabel")}</Label>
         <Select value={selectedFont} onValueChange={(value) => onFontChange(value as FontKey)}>
           <SelectTrigger className="w-full sm:w-64">
-            <SelectValue placeholder="Select a font" />
+            <SelectValue placeholder={t("theme.fontPlaceholder")} />
           </SelectTrigger>
           <SelectContent>
             {Object.entries(FONTS).map(([key, font]) => (
@@ -193,7 +195,7 @@ export const ThemeSelector = ({
           </SelectContent>
         </Select>
         <p className="text-sm text-muted-foreground">
-          Preview: <span style={{ fontFamily: FONTS[selectedFont].family }}>The quick brown fox jumps over the lazy dog.</span>
+          {t("theme.preview")}: <span style={{ fontFamily: FONTS[selectedFont].family }}>The quick brown fox jumps over the lazy dog.</span>
         </p>
       </div>
     </div>

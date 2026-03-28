@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Trophy, Eye, MousePointer, Rocket, Medal, ArrowLeft } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { SEO } from "@/components/SEO";
@@ -19,6 +20,7 @@ interface LeaderboardEntry {
 }
 
 export default function Leaderboards() {
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [leaderboard, setLeaderboard] = useState<LeaderboardEntry[]>([]);
 
@@ -94,8 +96,8 @@ export default function Leaderboards() {
   return (
     <div className="min-h-screen bg-background">
       <SEO
-        title="Leaderboards | Founder Page"
-        description="See the top makers and entrepreneurs ranked by revenue and startups. Compete for the top spots!"
+        title={t("leaderboards.seoTitle")}
+        description={t("leaderboards.seoDesc")}
         url="/leaderboards"
       />
 
@@ -104,10 +106,10 @@ export default function Leaderboards() {
         <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 text-muted-foreground hover:text-foreground transition-colors">
             <ArrowLeft className="w-4 h-4" />
-            <span>Back to Home</span>
+            <span>{t("leaderboards.backHome")}</span>
           </Link>
           <Link to="/" className="text-xl font-bold">
-            Founder Page
+            {t("common.founderPage")}
           </Link>
         </div>
       </header>
@@ -116,13 +118,13 @@ export default function Leaderboards() {
       <section className="py-16 px-6 text-center">
         <div className="inline-flex items-center gap-2 bg-primary/10 text-primary px-4 py-2 rounded-full mb-6">
           <Trophy className="w-4 h-4" />
-          <span className="text-sm font-medium">Leaderboards</span>
+          <span className="text-sm font-medium">{t("leaderboards.badge")}</span>
         </div>
         <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Compete for the Top
+          {t("leaderboards.title")}
         </h1>
         <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          See who's building the most successful startups. Rankings based on verified revenue and startup count.
+          {t("leaderboards.description")}
         </p>
       </section>
 
@@ -133,11 +135,11 @@ export default function Leaderboards() {
             <TabsList className="grid w-full grid-cols-2 mb-8">
               <TabsTrigger value="revenue" className="flex items-center gap-2">
                 <Rocket className="w-4 h-4" />
-                By Revenue
+                {t("leaderboards.byRevenue")}
               </TabsTrigger>
               <TabsTrigger value="startups" className="flex items-center gap-2">
                 <Trophy className="w-4 h-4" />
-                By Startups
+                {t("leaderboards.byStartups")}
               </TabsTrigger>
             </TabsList>
 
@@ -146,7 +148,7 @@ export default function Leaderboards() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Rocket className="w-5 h-5 text-primary" />
-                    Top Earners
+                    {t("leaderboards.topEarners")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -161,7 +163,7 @@ export default function Leaderboards() {
                     </div>
                   ) : leaderboard.length === 0 ? (
                     <p className="text-center text-muted-foreground py-8">
-                      No makers on the leaderboard yet. Be the first!
+                      {t("leaderboards.empty")}
                     </p>
                   ) : (
                     <div className="space-y-3">
@@ -193,7 +195,7 @@ export default function Leaderboards() {
                               {formatRevenue(entry.total_revenue)}/mo
                             </p>
                             <p className="text-sm text-muted-foreground">
-                              {entry.startups_count} startup{entry.startups_count !== 1 ? "s" : ""}
+                              {t("leaderboards.startupCount", { count: entry.startups_count })}
                             </p>
                           </div>
                         </Link>
@@ -209,7 +211,7 @@ export default function Leaderboards() {
                 <CardHeader>
                   <CardTitle className="flex items-center gap-2">
                     <Trophy className="w-5 h-5 text-primary" />
-                    Most Startups
+                    {t("leaderboards.mostStartups")}
                   </CardTitle>
                 </CardHeader>
                 <CardContent>
@@ -224,7 +226,7 @@ export default function Leaderboards() {
                     </div>
                   ) : leaderboard.length === 0 ? (
                     <p className="text-center text-muted-foreground py-8">
-                      No makers on the leaderboard yet. Be the first!
+                      {t("leaderboards.empty")}
                     </p>
                   ) : (
                     <div className="space-y-3">
@@ -255,7 +257,7 @@ export default function Leaderboards() {
                             </div>
                             <div className="text-right">
                               <p className="font-bold">
-                                {entry.startups_count} startup{entry.startups_count !== 1 ? "s" : ""}
+                                {t("leaderboards.startupCount", { count: entry.startups_count })}
                               </p>
                               <p className="text-sm text-muted-foreground">
                                 {formatRevenue(entry.total_revenue)}/mo

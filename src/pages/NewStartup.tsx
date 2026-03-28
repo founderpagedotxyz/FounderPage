@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentUser } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -15,6 +16,7 @@ import { startupSchema } from "@/lib/validation";
 
 const NewStartup = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(false);
   
   const [name, setName] = useState("");
@@ -36,7 +38,7 @@ const NewStartup = () => {
     }
 
     if (!name.trim()) {
-      toast.error("Startup name is required");
+      toast.error(t("newStartup.nameRequired"));
       setLoading(false);
       return;
     }
@@ -52,7 +54,7 @@ const NewStartup = () => {
         logo_url: logoUrl || undefined,
       });
     } catch (error: any) {
-      toast.error(error.errors[0]?.message || "Invalid startup data");
+      toast.error(error.errors[0]?.message || t("newStartup.invalidData"));
       setLoading(false);
       return;
     }
@@ -70,9 +72,9 @@ const NewStartup = () => {
     });
 
     if (error) {
-      toast.error("Failed to create startup: " + error.message);
+      toast.error(t("newStartup.createFailed", { error: error.message }));
     } else {
-      toast.success("Startup created successfully!");
+      toast.success(t("newStartup.createSuccess"));
       navigate("/dashboard");
     }
 
@@ -96,14 +98,14 @@ const NewStartup = () => {
           onClick={() => navigate("/dashboard")}
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
-          Back to Dashboard
+          {t("newStartup.backToDashboard")}
         </Button>
 
         <Card>
           <CardHeader>
-            <CardTitle>Add New Startup</CardTitle>
+            <CardTitle>{t("newStartup.title")}</CardTitle>
             <CardDescription>
-              Share your project with the world and showcase your progress
+              {t("newStartup.description")}
             </CardDescription>
           </CardHeader>
           <CardContent>
@@ -112,74 +114,74 @@ const NewStartup = () => {
                 bucket="startup-logos"
                 currentImageUrl={logoUrl}
                 onUploadComplete={setLogoUrl}
-                label="Startup Logo"
+                label={t("newStartup.logo")}
               />
               
               <div className="space-y-2">
                 <Label htmlFor="name">
-                  Startup Name <span className="text-destructive">*</span>
+                  {t("newStartup.name")} <span className="text-destructive">*</span>
                 </Label>
                 <Input
                   id="name"
                   value={name}
                   onChange={(e) => setName(e.target.value)}
-                  placeholder="e.g. CodeFast"
+                  placeholder={t("newStartup.namePlaceholder")}
                   required
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="description">Description</Label>
+                <Label htmlFor="description">{t("newStartup.descLabel")}</Label>
                 <Textarea
                   id="description"
                   value={description}
                   onChange={(e) => setDescription(e.target.value)}
-                  placeholder="What does your startup do?"
+                  placeholder={t("newStartup.descPlaceholder")}
                   rows={3}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="url">Website URL</Label>
+                <Label htmlFor="url">{t("newStartup.url")}</Label>
                 <Input
                   id="url"
                   type="url"
                   value={url}
                   onChange={(e) => setUrl(e.target.value)}
-                  placeholder="https://yoursite.com"
+                  placeholder={t("newStartup.urlPlaceholder")}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="category">Category</Label>
+                <Label htmlFor="category">{t("newStartup.category")}</Label>
                 <Input
                   id="category"
                   value={category}
                   onChange={(e) => setCategory(e.target.value)}
-                  placeholder="e.g. SaaS, E-commerce, Education"
+                  placeholder={t("newStartup.categoryPlaceholder")}
                 />
               </div>
 
               <div className="space-y-2">
-                <Label htmlFor="income">Monthly Revenue (USD)</Label>
+                <Label htmlFor="income">{t("newStartup.revenue")}</Label>
                 <Input
                   id="income"
                   type="number"
                   min="0"
                   value={monthlyIncome}
                   onChange={(e) => setMonthlyIncome(e.target.value)}
-                  placeholder="0"
+                  placeholder={t("newStartup.revenuePlaceholder")}
                 />
                 <p className="text-xs text-muted-foreground">
-                  Enter your current monthly recurring revenue
+                  {t("newStartup.revenueHelp")}
                 </p>
               </div>
 
               <div className="flex items-center justify-between p-4 border border-border rounded-lg">
                 <div className="space-y-0.5">
-                  <Label htmlFor="show-income">Show Revenue Publicly</Label>
+                  <Label htmlFor="show-income">{t("newStartup.showRevenue")}</Label>
                   <p className="text-sm text-muted-foreground">
-                    Display your monthly revenue on your public profile
+                    {t("newStartup.showRevenueHelp")}
                   </p>
                 </div>
                 <Switch
@@ -195,14 +197,14 @@ const NewStartup = () => {
                   className="flex-1 bg-accent hover:bg-accent/90"
                   disabled={loading}
                 >
-                  {loading ? "Creating..." : "Create Startup"}
+                  {loading ? t("newStartup.creating") : t("newStartup.createBtn")}
                 </Button>
                 <Button
                   type="button"
                   variant="outline"
                   onClick={() => navigate("/dashboard")}
                 >
-                  Cancel
+                  {t("common.cancel")}
                 </Button>
               </div>
             </form>

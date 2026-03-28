@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
@@ -11,6 +12,7 @@ interface StripeConnectProps {
 }
 
 export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeConnectProps) => {
+  const { t } = useTranslation();
   const [connecting, setConnecting] = useState(false);
   const [syncing, setSyncing] = useState(false);
 
@@ -19,7 +21,7 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
     try {
       const { data: { session } } = await supabase.auth.getSession();
       if (!session) {
-        toast.error("Please log in to connect Stripe");
+        toast.error(t("stripe.loginRequired"));
         return;
       }
 
@@ -32,11 +34,11 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
       if (data?.url) {
         // Open Stripe Connect onboarding in new tab
         window.open(data.url, "_blank");
-        toast.success("Complete the Stripe onboarding in the new tab");
+        toast.success(t("stripe.onboarding"));
       }
     } catch (error: any) {
       console.error("Error connecting Stripe:", error);
-      toast.error(error.message || "Failed to start Stripe connection");
+      toast.error(error.message || t("stripe.connectFailed"));
     } finally {
       setConnecting(false);
     }
@@ -51,11 +53,11 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
 
       if (error) throw error;
 
-      toast.success(`Revenue synced! Current MRR: $${data.currentMRR}`);
+      toast.success(t("stripe.synced", { amount: data.currentMRR }));
       onConnected?.();
     } catch (error: any) {
       console.error("Error syncing revenue:", error);
-      toast.error(error.message || "Failed to sync revenue");
+      toast.error(error.message || t("stripe.syncFailed"));
     } finally {
       setSyncing(false);
     }
@@ -66,7 +68,7 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
       <div className="flex items-center gap-2">
         <span className="text-xs text-accent flex items-center gap-1">
           <CheckCircle className="w-3 h-3" />
-          Stripe Connected
+          {t("stripe.connected")}
         </span>
         <Button
           variant="ghost"
@@ -80,7 +82,7 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
           ) : (
             <RefreshCw className="w-3 h-3" />
           )}
-          <span className="ml-1">Sync</span>
+          <span className="ml-1">{t("stripe.sync")}</span>
         </Button>
       </div>
     );
@@ -99,7 +101,7 @@ export const StripeConnect = ({ startupId, isConnected, onConnected }: StripeCon
       ) : (
         <Link2 className="w-3 h-3 mr-1" />
       )}
-      Connect Stripe
+      {t("stripe.connect")}
     </Button>
   );
 };

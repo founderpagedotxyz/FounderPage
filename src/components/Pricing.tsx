@@ -2,6 +2,7 @@ import { Check, Star, Zap } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { useTranslation } from "react-i18next";
 
 const plans = [
   {
@@ -55,19 +56,20 @@ const plans = [
 ];
 
 export const Pricing = () => {
+  const { t } = useTranslation();
   return (
     <section id="pricing" className="py-24 px-6">
       <div className="max-w-6xl mx-auto">
         <div className="text-center mb-16">
           <Badge variant="secondary" className="mb-4">
             <Zap className="w-3 h-3 mr-1" />
-            Simple Pricing
+            {t("pricing.badge")}
           </Badge>
           <h2 className="text-4xl md:text-5xl font-bold mb-4">
-            One payment. Lifetime access.
+            {t("pricing.title")}
           </h2>
           <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-            No subscriptions, no hidden fees. Pay once and own it forever.
+            {t("pricing.description")}
           </p>
         </div>
 
@@ -120,7 +122,7 @@ export const Pricing = () => {
         </div>
 
         <p className="text-center text-sm text-muted-foreground mt-8">
-          🔒 Secure payment via Stripe. 30-day money-back guarantee.
+          {t("pricing.securePayment")}
         </p>
       </div>
     </section>

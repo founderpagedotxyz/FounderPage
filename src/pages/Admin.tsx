@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentUser } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -28,6 +29,7 @@ interface ProfileWithStartups {
 }
 
 const Admin = () => {
+  const { t } = useTranslation();
   const navigate = useNavigate();
   const [loading, setLoading] = useState(true);
   const [isAdmin, setIsAdmin] = useState(false);
@@ -52,7 +54,7 @@ const Admin = () => {
     });
 
     if (!hasAdminRole) {
-      toast.error("Access denied. Admin privileges required.");
+      toast.error(t("admin.accessDenied"));
       navigate("/dashboard");
       return;
     }
@@ -103,10 +105,10 @@ const Admin = () => {
     const { error } = await supabase.from("profiles").delete().eq("id", userId);
 
     if (error) {
-      toast.error("Failed to delete user");
+      toast.error(t("admin.failedDelete"));
       console.error(error);
     } else {
-      toast.success(`User ${username} deleted successfully`);
+      toast.success(t("admin.userDeleted", { username }));
       loadData();
     }
   };
@@ -114,7 +116,7 @@ const Admin = () => {
   if (loading) {
     return (
       <div className="min-h-screen flex items-center justify-center">
-        <p>Loading...</p>
+        <p>{t("common.loading")}</p>
       </div>
     );
   }
@@ -129,19 +131,19 @@ const Admin = () => {
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-              <span className="font-bold text-lg">Founder Page</span>
-              <span className="text-xs bg-destructive text-destructive-foreground px-2 py-0.5 rounded">ADMIN</span>
+              <span className="font-bold text-lg">{t("common.founderPage")}</span>
+              <span className="text-xs bg-destructive text-destructive-foreground px-2 py-0.5 rounded">{t("admin.adminBadge")}</span>
             </div>
             <Button variant="ghost" size="sm" onClick={() => navigate("/dashboard")}>
               <ArrowLeft className="w-4 h-4 mr-2" />
-              Back to Dashboard
+              {t("admin.backDashboard")}
             </Button>
           </div>
         </div>
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-6xl">
-        <h1 className="text-3xl font-bold mb-8">Admin Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-8">{t("admin.title")}</h1>
 
         {/* Stats */}
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
@@ -153,7 +155,7 @@ const Admin = () => {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{stats.totalUsers}</p>
-                  <p className="text-sm text-muted-foreground">Total Users</p>
+                  <p className="text-sm text-muted-foreground">{t("admin.totalUsers")}</p>
                 </div>
               </div>
             </CardContent>
@@ -166,7 +168,7 @@ const Admin = () => {
                 </div>
                 <div>
                   <p className="text-2xl font-bold">{stats.totalStartups}</p>
-                  <p className="text-sm text-muted-foreground">Total Startups</p>
+                  <p className="text-sm text-muted-foreground">{t("admin.totalStartups")}</p>
                 </div>
               </div>
             </CardContent>
@@ -176,8 +178,8 @@ const Admin = () => {
         {/* Users List */}
         <Card>
           <CardHeader>
-            <CardTitle>All Users</CardTitle>
-            <CardDescription>Manage all registered users</CardDescription>
+            <CardTitle>{t("admin.allUsers")}</CardTitle>
+            <CardDescription>{t("admin.manageUsers")}</CardDescription>
           </CardHeader>
           <CardContent>
             <div className="space-y-3">
@@ -193,10 +195,9 @@ const Admin = () => {
                     </div>
                     <p className="text-sm text-muted-foreground">{profile.email}</p>
                     <p className="text-xs text-muted-foreground mt-1">
-                      {profile.startups?.[0]?.count || 0} startups • Joined{" "}
-                      {profile.created_at
+                      {t("admin.userInfo", { count: profile.startups?.[0]?.count || 0, date: profile.created_at
                         ? new Date(profile.created_at).toLocaleDateString()
-                        : "Unknown"}
+                        : "Unknown" })}
                     </p>
                   </div>
                   <div className="flex items-center gap-2">
@@ -205,7 +206,7 @@ const Admin = () => {
                       size="sm"
                       onClick={() => navigate(`/${profile.username}`)}
                     >
-                      View
+                      {t("common.view")}
                     </Button>
                     <AlertDialog>
                       <AlertDialogTrigger asChild>
@@ -215,19 +216,18 @@ const Admin = () => {
                       </AlertDialogTrigger>
                       <AlertDialogContent>
                         <AlertDialogHeader>
-                          <AlertDialogTitle>Delete User?</AlertDialogTitle>
+                          <AlertDialogTitle>{t("admin.deleteTitle")}</AlertDialogTitle>
                           <AlertDialogDescription>
-                            This will permanently delete {profile.name || profile.username} and all
-                            their startups. This action cannot be undone.
+                            {t("admin.deleteDesc", { name: profile.name || profile.username })}
                           </AlertDialogDescription>
                         </AlertDialogHeader>
                         <AlertDialogFooter>
-                          <AlertDialogCancel>Cancel</AlertDialogCancel>
+                          <AlertDialogCancel>{t("common.cancel")}</AlertDialogCancel>
                           <AlertDialogAction
                             onClick={() => handleDeleteUser(profile.id, profile.username)}
                             className="bg-destructive text-destructive-foreground hover:bg-destructive/90"
                           >
-                            Delete
+                            {t("common.delete")}
                           </AlertDialogAction>
                         </AlertDialogFooter>
                       </AlertDialogContent>

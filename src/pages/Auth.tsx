@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
@@ -10,14 +11,16 @@ import { toast } from "sonner";
 import { FileText } from "lucide-react";
 import { z } from "zod";
 
-// Strong password validation schema
-const passwordSchema = z.string()
-  .min(8, "Password must be at least 8 characters")
-  .regex(/[A-Z]/, "Password must contain at least one uppercase letter")
-  .regex(/[a-z]/, "Password must contain at least one lowercase letter")
-  .regex(/[0-9]/, "Password must contain at least one number");
 const Auth = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
+
+  // Strong password validation schema
+  const passwordSchema = z.string()
+    .min(8, t("auth.passwordMin"))
+    .regex(/[A-Z]/, t("auth.passwordUpper"))
+    .regex(/[a-z]/, t("auth.passwordLower"))
+    .regex(/[0-9]/, t("auth.passwordNumber"));
   const [loading, setLoading] = useState(false);
   const [signInEmail, setSignInEmail] = useState("");
   const [signInPassword, setSignInPassword] = useState("");
@@ -41,17 +44,17 @@ const Auth = () => {
     setLoading(true);
 
     if (!signInEmail || !signInPassword) {
-      toast.error("Please fill in all fields");
+      toast.error(t("auth.fillFields"));
       setLoading(false);
       return;
     }
 
     const { error } = await signIn(signInEmail, signInPassword);
-    
+
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Welcome back!");
+      toast.success(t("auth.welcomeBack"));
       navigate("/dashboard");
     }
     
@@ -63,7 +66,7 @@ const Auth = () => {
     setLoading(true);
 
     if (!signUpEmail || !signUpPassword) {
-      toast.error("Please fill in all fields");
+      toast.error(t("auth.fillFields"));
       setLoading(false);
       return;
     }
@@ -81,7 +84,7 @@ const Auth = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Account created! Welcome aboard!");
+      toast.success(t("auth.accountCreated"));
       navigate("/dashboard");
     }
     
@@ -93,7 +96,7 @@ const Auth = () => {
     setLoading(true);
 
     if (!forgotEmail) {
-      toast.error("Please enter your email");
+      toast.error(t("auth.enterEmail"));
       setLoading(false);
       return;
     }
@@ -103,7 +106,7 @@ const Auth = () => {
     if (error) {
       toast.error(error.message);
     } else {
-      toast.success("Password reset email sent! Check your inbox.");
+      toast.success(t("auth.resetSent"));
       setShowForgotPassword(false);
       setForgotEmail("");
     }
@@ -119,37 +122,37 @@ const Auth = () => {
 
       <Card className="w-full max-w-md">
         <CardHeader>
-          <CardTitle>Welcome</CardTitle>
+          <CardTitle>{t("auth.welcome")}</CardTitle>
           <CardDescription>
-            Sign in to your account or create a new one to get started
+            {t("auth.description")}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <Tabs defaultValue="signin" className="w-full">
             <TabsList className="grid w-full grid-cols-2">
-              <TabsTrigger value="signin">Sign In</TabsTrigger>
-              <TabsTrigger value="signup">Sign Up</TabsTrigger>
+              <TabsTrigger value="signin">{t("common.signIn")}</TabsTrigger>
+              <TabsTrigger value="signup">{t("common.signUp")}</TabsTrigger>
             </TabsList>
 
             <TabsContent value="signin">
               <form onSubmit={handleSignIn} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signin-email">Email</Label>
+                  <Label htmlFor="signin-email">{t("auth.email")}</Label>
                   <Input
                     id="signin-email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     value={signInEmail}
                     onChange={(e) => setSignInEmail(e.target.value)}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signin-password">Password</Label>
+                  <Label htmlFor="signin-password">{t("auth.password")}</Label>
                   <Input
                     id="signin-password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder={t("auth.passwordPlaceholder")}
                     value={signInPassword}
                     onChange={(e) => setSignInPassword(e.target.value)}
                     required
@@ -160,14 +163,14 @@ const Auth = () => {
                   className="w-full bg-accent hover:bg-accent/90"
                   disabled={loading}
                 >
-                  {loading ? "Signing in..." : "Sign In"}
+                  {loading ? t("auth.signingIn") : t("common.signIn")}
                 </Button>
                 <button
                   type="button"
                   onClick={() => setShowForgotPassword(true)}
                   className="w-full text-sm text-muted-foreground hover:text-foreground transition-colors"
                 >
-                  Forgot your password?
+                  {t("auth.forgotPassword")}
                 </button>
               </form>
             </TabsContent>
@@ -175,32 +178,32 @@ const Auth = () => {
             <TabsContent value="signup">
               <form onSubmit={handleSignUp} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="signup-name">Name (optional)</Label>
+                  <Label htmlFor="signup-name">{t("auth.nameOptional")}</Label>
                   <Input
                     id="signup-name"
                     type="text"
-                    placeholder="Your name"
+                    placeholder={t("auth.namePlaceholder")}
                     value={signUpName}
                     onChange={(e) => setSignUpName(e.target.value)}
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-email">Email</Label>
+                  <Label htmlFor="signup-email">{t("auth.email")}</Label>
                   <Input
                     id="signup-email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     value={signUpEmail}
                     onChange={(e) => setSignUpEmail(e.target.value)}
                     required
                   />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="signup-password">Password</Label>
+                  <Label htmlFor="signup-password">{t("auth.password")}</Label>
                   <Input
                     id="signup-password"
                     type="password"
-                    placeholder="••••••••"
+                    placeholder={t("auth.passwordPlaceholder")}
                     value={signUpPassword}
                     onChange={(e) => setSignUpPassword(e.target.value)}
                     required
@@ -211,7 +214,7 @@ const Auth = () => {
                   className="w-full bg-accent hover:bg-accent/90"
                   disabled={loading}
                 >
-                  {loading ? "Creating account..." : "Sign Up"}
+                  {loading ? t("auth.creatingAccount") : t("common.signUp")}
                 </Button>
               </form>
             </TabsContent>
@@ -224,19 +227,19 @@ const Auth = () => {
         <div className="fixed inset-0 bg-background/80 backdrop-blur-sm flex items-center justify-center z-50">
           <Card className="w-full max-w-md mx-4">
             <CardHeader>
-              <CardTitle>Reset Password</CardTitle>
+              <CardTitle>{t("auth.resetTitle")}</CardTitle>
               <CardDescription>
-                Enter your email and we'll send you a reset link
+                {t("auth.resetDesc")}
               </CardDescription>
             </CardHeader>
             <CardContent>
               <form onSubmit={handleForgotPassword} className="space-y-4">
                 <div className="space-y-2">
-                  <Label htmlFor="forgot-email">Email</Label>
+                  <Label htmlFor="forgot-email">{t("auth.email")}</Label>
                   <Input
                     id="forgot-email"
                     type="email"
-                    placeholder="you@example.com"
+                    placeholder={t("auth.emailPlaceholder")}
                     value={forgotEmail}
                     onChange={(e) => setForgotEmail(e.target.value)}
                     required
@@ -252,14 +255,14 @@ const Auth = () => {
                       setForgotEmail("");
                     }}
                   >
-                    Cancel
+                    {t("common.cancel")}
                   </Button>
                   <Button
                     type="submit"
                     className="flex-1 bg-accent hover:bg-accent/90"
                     disabled={loading}
                   >
-                    {loading ? "Sending..." : "Send Reset Link"}
+                    {loading ? t("auth.sending") : t("auth.sendReset")}
                   </Button>
                 </div>
               </form>

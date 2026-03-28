@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { ChartContainer, ChartTooltip, ChartTooltipContent } from "@/components/ui/chart";
 import { Area, AreaChart, XAxis, YAxis, ResponsiveContainer } from "recharts";
 
@@ -13,7 +14,7 @@ interface RevenueChartProps {
 
 const chartConfig = {
   revenue: {
-    label: "Revenue",
+    label: "revenue.label",
     color: "hsl(39, 100%, 50%)", // Warm orange/yellow
   },
 };
@@ -25,10 +26,11 @@ const formatYAxis = (value: number) => {
 };
 
 export const RevenueChart = ({ data, compact = false }: RevenueChartProps) => {
+  const { t } = useTranslation();
   if (!data || data.length === 0) {
     return (
       <div className="flex items-center justify-center h-full text-muted-foreground text-sm">
-        No revenue data
+        {t("revenue.noData")}
       </div>
     );
   }
@@ -86,7 +88,7 @@ export const RevenueChart = ({ data, compact = false }: RevenueChartProps) => {
           <ChartTooltip 
             content={
               <ChartTooltipContent 
-                formatter={(value) => [`$${Number(value).toLocaleString()}`, "Revenue"]}
+                formatter={(value) => [`$${Number(value).toLocaleString()}`, t("revenue.label")]}
               />
             } 
           />

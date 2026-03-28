@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useParams, useNavigate } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { Helmet } from "react-helmet-async";
 import { supabase } from "@/integrations/supabase/client";
 import { Card, CardContent } from "@/components/ui/card";
@@ -30,6 +31,7 @@ type Startup = Database["public"]["Tables"]["startups"]["Row"];
 const Profile = () => {
   const { username } = useParams();
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<PublicProfile | null>(null);
   const [startups, setStartups] = useState<Startup[]>([]);
@@ -108,8 +110,8 @@ const Profile = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-background px-4">
         <h1 className="text-4xl font-bold mb-4">404</h1>
-        <p className="text-xl text-muted-foreground mb-8">Profile not found</p>
-        <Button onClick={() => navigate("/")}>Go Home</Button>
+        <p className="text-xl text-muted-foreground mb-8">{t("profile.notFound")}</p>
+        <Button onClick={() => navigate("/")}>{t("profile.goHome")}</Button>
       </div>
     );
   }
@@ -125,24 +127,24 @@ const Profile = () => {
     >
       <Helmet>
         <link rel="stylesheet" href={fontImportUrl} />
-        <title>{profile.name || profile.username || "User"} - Founder Page</title>
-        <meta 
-          name="description" 
-          content={profile?.bio || `Check out ${profile?.name || profile?.username}'s profile on Founder Page`} 
+        <title>{profile.name || profile.username || "User"} - {t("common.founderPage")}</title>
+        <meta
+          name="description"
+          content={profile?.bio || t("profile.metaDesc", { name: profile?.name || profile?.username })}
         />
-        <meta property="og:title" content={`${profile?.name || profile?.username} - Founder Page`} />
-        <meta 
-          property="og:description" 
-          content={profile?.bio || `Check out ${profile?.name || profile?.username}'s profile on Founder Page`} 
+        <meta property="og:title" content={`${profile?.name || profile?.username} - ${t("common.founderPage")}`} />
+        <meta
+          property="og:description"
+          content={profile?.bio || t("profile.metaDesc", { name: profile?.name || profile?.username })}
         />
         {profile?.photo_url && <meta property="og:image" content={profile.photo_url} />}
         <meta property="og:url" content={`https://founderpage.xyz/${profile?.username}`} />
         <meta property="og:type" content="profile" />
         <meta name="twitter:card" content="summary_large_image" />
-        <meta name="twitter:title" content={`${profile?.name || profile?.username} - Founder Page`} />
-        <meta 
-          name="twitter:description" 
-          content={profile?.bio || `Check out ${profile?.name || profile?.username}'s profile on Founder Page`} 
+        <meta name="twitter:title" content={`${profile?.name || profile?.username} - ${t("common.founderPage")}`} />
+        <meta
+          name="twitter:description"
+          content={profile?.bio || t("profile.metaDesc", { name: profile?.name || profile?.username })}
         />
         {profile?.photo_url && <meta name="twitter:image" content={profile.photo_url} />}
         <link rel="canonical" href={`https://founderpage.xyz/${profile?.username}`} />
@@ -151,7 +153,7 @@ const Profile = () => {
       <header style={{ borderBottom: `1px solid hsl(${themeStyles["--profile-muted"]})` }}>
         <div className="container mx-auto px-4 py-4">
           <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-            <span className="font-bold text-lg">Founder Page</span>
+            <span className="font-bold text-lg">{t("common.founderPage")}</span>
           </div>
         </div>
       </header>
@@ -274,7 +276,7 @@ const Profile = () => {
         {startups.length === 0 && (
           <div className="text-center py-12">
             <p style={{ color: `hsl(${themeStyles["--profile-foreground"]} / 0.6)` }}>
-              No startups to show yet
+              {t("profile.noStartups")}
             </p>
           </div>
         )}
@@ -289,7 +291,7 @@ const Profile = () => {
             }}
             onClick={() => navigate("/auth")}
           >
-            Build your Founder Page
+            {t("profile.buildPage")}
           </Button>
         </div>
       </main>

@@ -1,4 +1,7 @@
+import { useTranslation } from "react-i18next";
+
 const Footer = () => {
+  const { t } = useTranslation();
   const currentYear = new Date().getFullYear();
 
   return (
@@ -13,33 +16,32 @@ const Footer = () => {
               </div>
             </div>
             <p className="text-muted-foreground text-sm max-w-md">
-              The portfolio platform for indie makers and entrepreneurs. 
-              Showcase your startups, verify your revenue, and build in public.
+              {t("footer.description")}
             </p>
           </div>
 
           {/* Product */}
           <div>
-            <h3 className="font-semibold mb-4">Product</h3>
+            <h3 className="font-semibold mb-4">{t("footer.product")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Features
+                  {t("footer.features")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Pricing
+                  {t("footer.pricing")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Examples
+                  {t("footer.examples")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Changelog
+                  {t("footer.changelog")}
                 </a>
               </li>
             </ul>
@@ -47,26 +49,26 @@ const Footer = () => {
 
           {/* Company */}
           <div>
-            <h3 className="font-semibold mb-4">Company</h3>
+            <h3 className="font-semibold mb-4">{t("footer.company")}</h3>
             <ul className="space-y-2 text-sm text-muted-foreground">
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  About
+                  {t("footer.about")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Blog
+                  {t("footer.blog")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Privacy
+                  {t("footer.privacy")}
                 </a>
               </li>
               <li>
                 <a href="#" className="hover:text-foreground transition-colors">
-                  Terms
+                  {t("footer.terms")}
                 </a>
               </li>
             </ul>
@@ -77,7 +79,7 @@ const Footer = () => {
         <div className="mt-12 pt-8 border-t border-border">
           <div className="flex flex-col md:flex-row items-center justify-between gap-4">
             <p className="text-sm text-muted-foreground">
-              © {currentYear} Founder Page. All rights reserved.
+              {t("footer.copyright", { year: currentYear })}
             </p>
             <div className="flex items-center gap-6 text-sm text-muted-foreground">
               <a href="#" className="hover:text-foreground transition-colors">

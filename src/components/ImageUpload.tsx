@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
@@ -14,6 +15,7 @@ interface ImageUploadProps {
 }
 
 export const ImageUpload = ({ bucket, currentImageUrl, onUploadComplete, label }: ImageUploadProps) => {
+  const { t } = useTranslation();
   const [uploading, setUploading] = useState(false);
   const [preview, setPreview] = useState<string | null>(currentImageUrl || null);
 
@@ -26,13 +28,13 @@ export const ImageUpload = ({ bucket, currentImageUrl, onUploadComplete, label }
     if (bucket === "startup-logos") validTypes.push("image/svg+xml");
     
     if (!validTypes.includes(file.type)) {
-      toast.error("Please upload a valid image file (JPEG, PNG, WebP, GIF" + (bucket === "startup-logos" ? ", SVG" : "") + ")");
+      toast.error(t("imageUpload.invalidFile"));
       return;
     }
 
     // Validate file size (5MB)
     if (file.size > 5242880) {
-      toast.error("Image must be less than 5MB");
+      toast.error(t("imageUpload.tooLarge"));
       return;
     }
 
@@ -41,7 +43,7 @@ export const ImageUpload = ({ bucket, currentImageUrl, onUploadComplete, label }
     try {
       const { data: { user } } = await supabase.auth.getUser();
       if (!user) {
-        toast.error("You must be logged in to upload images");
+        toast.error(t("imageUpload.loginRequired"));
         return;
       }
 
@@ -63,9 +65,9 @@ export const ImageUpload = ({ bucket, currentImageUrl, onUploadComplete, label }
 
       setPreview(publicUrl);
       onUploadComplete(publicUrl);
-      toast.success("Image uploaded successfully!");
+      toast.success(t("imageUpload.success"));
     } catch (error: any) {
-      toast.error("Error uploading image: " + error.message);
+      toast.error(t("imageUpload.error", { error: error.message }));
     } finally {
       setUploading(false);
     }
@@ -108,7 +110,7 @@ export const ImageUpload = ({ bucket, currentImageUrl, onUploadComplete, label }
           {uploading && (
             <div className="flex items-center gap-2 text-sm text-muted-foreground">
               <Upload className="w-4 h-4 animate-pulse" />
-              Uploading...
+              {t("imageUpload.uploading")}
             </div>
           )}
         </div>

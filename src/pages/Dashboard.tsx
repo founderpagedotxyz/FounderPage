@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useNavigate, useSearchParams } from "react-router-dom";
+import { useTranslation } from "react-i18next";
 import { supabase } from "@/integrations/supabase/client";
 import { getCurrentUser, signOut } from "@/lib/supabase";
 import { Button } from "@/components/ui/button";
@@ -26,12 +27,14 @@ import { RevenueChart } from "@/components/RevenueChart";
 import { StripeConnect } from "@/components/StripeConnect";
 import { usernameSchema, profileSchema, RESERVED_USERNAMES } from "@/lib/validation";
 import { ThemeSelector, ThemeKey, FontKey } from "@/components/ThemeSelector";
+import { LanguageSelector } from "@/components/LanguageSelector";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 type Startup = Database["public"]["Tables"]["startups"]["Row"];
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const { t } = useTranslation();
   const [searchParams] = useSearchParams();
   const [loading, setLoading] = useState(true);
   const [profile, setProfile] = useState<Profile | null>(null);
@@ -61,7 +64,7 @@ const Dashboard = () => {
     
     const stripeConnected = searchParams.get("stripe_connected");
     if (stripeConnected === "true") {
-      toast.success("Stripe connected! Click 'Sync' to fetch your revenue data.");
+      toast.success(t("dashboard.stripeConnected"));
       window.history.replaceState({}, "", "/dashboard");
     }
   }, [searchParams]);
@@ -137,7 +140,7 @@ const Dashboard = () => {
       }
     } catch (error) {
       console.error("Dashboard load error:", error);
-      toast.error("Failed to load data");
+      toast.error(t("dashboard.failedLoad"));
     } finally {
       setLoading(false);
     }
@@ -149,7 +152,7 @@ const Dashboard = () => {
     const cleanUsername = username.toLowerCase().trim();
     if (cleanUsername !== profile.username) {
       if (RESERVED_USERNAMES.includes(cleanUsername)) {
-        toast.error("This username is reserved");
+        toast.error(t("dashboard.reservedUsername"));
         return;
       }
       try {
@@ -166,7 +169,7 @@ const Dashboard = () => {
         .maybeSingle();
 
       if (existingUser && existingUser.id !== profile.id) {
-        toast.error("Username already taken");
+        toast.error(t("dashboard.usernameTaken"));
         return;
       }
     }
@@ -186,9 +189,9 @@ const Dashboard = () => {
       .eq("id", profile.id);
 
     if (error) {
-      toast.error("Failed to update profile");
+      toast.error(t("dashboard.failedUpdate"));
     } else {
-      toast.success("Profile updated!");
+      toast.success(t("dashboard.profileUpdated"));
       setEditMode(false);
       loadUserData();
     }
@@ -202,9 +205,9 @@ const Dashboard = () => {
   const handleDeleteStartup = async (startupId: string, startupName: string) => {
     await supabase.from("revenue_history").delete().eq("startup_id", startupId);
     const { error } = await supabase.from("startups").delete().eq("id", startupId);
-    if (error) toast.error("Failed to delete");
+    if (error) toast.error(t("dashboard.failedDelete"));
     else {
-      toast.success(`${startupName} deleted`);
+      toast.success(t("dashboard.deleted", { name: startupName }));
       loadUserData();
     }
   };
@@ -233,9 +236,9 @@ const Dashboard = () => {
       })
       .eq("id", editingStartupId);
 
-    if (error) toast.error("Failed to update");
+    if (error) toast.error(t("dashboard.failedUpdateStartup"));
     else {
-      toast.success("Startup updated!");
+      toast.success(t("dashboard.startupUpdated"));
       cancelEditingStartup();
       loadUserData();
     }
@@ -245,7 +248,7 @@ const Dashboard = () => {
     return (
       <div className="min-h-screen flex items-center justify-center bg-background">
         <Loader2 className="w-8 h-8 animate-spin text-accent" />
-        <p className="ml-2">Loading dashboard...</p>
+        <p className="ml-2">{t("dashboard.loadingDashboard")}</p>
       </div>
     );
   }
@@ -261,16 +264,17 @@ const Dashboard = () => {
             <div className="flex items-center gap-4">
               {isAdmin && (
                 <Button variant="outline" size="sm" onClick={() => navigate("/admin")} className="border-destructive text-destructive">
-                  <Shield className="w-4 h-4 mr-2" /> Admin
+                  <Shield className="w-4 h-4 mr-2" /> {t("dashboard.admin")}
                 </Button>
               )}
               {profile && (
                 <Button variant="outline" size="sm" onClick={() => navigate(`/${profile.username}`)}>
-                  <ExternalLink className="w-4 h-4 mr-2" /> View Public Page
+                  <ExternalLink className="w-4 h-4 mr-2" /> {t("dashboard.viewPublic")}
                 </Button>
               )}
+              <LanguageSelector />
               <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" /> Sign Out
+                <LogOut className="w-4 h-4 mr-2" /> {t("common.signOut")}
               </Button>
             </div>
           </div>
@@ -278,53 +282,53 @@ const Dashboard = () => {
       </header>
 
       <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-8">Dashboard</h1>
+        <h1 className="text-3xl font-bold mb-8">{t("dashboard.title")}</h1>
 
         <Card className="mb-8">
           <CardHeader>
             <div className="flex items-center justify-between">
               <div>
-                <CardTitle>Your Profile</CardTitle>
-                <CardDescription>Manage your public profile information</CardDescription>
+                <CardTitle>{t("dashboard.yourProfile")}</CardTitle>
+                <CardDescription>{t("dashboard.manageProfile")}</CardDescription>
               </div>
-              {!editMode && <Button onClick={() => setEditMode(true)}>Edit Profile</Button>}
+              {!editMode && <Button onClick={() => setEditMode(true)}>{t("dashboard.editProfile")}</Button>}
             </div>
           </CardHeader>
           <CardContent className="space-y-4">
             {editMode ? (
               <div className="space-y-4">
-                <ImageUpload bucket="profiles" currentImageUrl={photoUrl} onUploadComplete={setPhotoUrl} label="Profile Photo" />
-                <ImageUpload bucket="profiles" currentImageUrl={faviconUrl} onUploadComplete={setFaviconUrl} label="Page Favicon" />
+                <ImageUpload bucket="profiles" currentImageUrl={photoUrl} onUploadComplete={setPhotoUrl} label={t("dashboard.profilePhoto")} />
+                <ImageUpload bucket="profiles" currentImageUrl={faviconUrl} onUploadComplete={setFaviconUrl} label={t("dashboard.pageFavicon")} />
                 <div className="space-y-2">
-                  <Label htmlFor="username">Username</Label>
+                  <Label htmlFor="username">{t("dashboard.username")}</Label>
                   <Input id="username" value={username} onChange={(e) => setUsername(e.target.value)} className="lowercase" />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="name">Name</Label>
+                  <Label htmlFor="name">{t("dashboard.name")}</Label>
                   <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
                 </div>
                 <div className="space-y-2">
-                  <Label htmlFor="bio">Bio</Label>
+                  <Label htmlFor="bio">{t("dashboard.bio")}</Label>
                   <Textarea id="bio" value={bio} onChange={(e) => setBio(e.target.value)} rows={3} />
                 </div>
                 <div className="pt-4 border-t border-border">
                   <div className="flex items-center gap-2 mb-4">
                     <Palette className="w-5 h-5 text-accent" />
-                    <h3 className="font-semibold">Page Customization</h3>
+                    <h3 className="font-semibold">{t("dashboard.pageCustomization")}</h3>
                   </div>
                   <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} />
                 </div>
                 <div className="flex gap-2">
-                  <Button onClick={handleUpdateProfile}>Save Changes</Button>
-                  <Button variant="outline" onClick={() => setEditMode(false)}>Cancel</Button>
+                  <Button onClick={handleUpdateProfile}>{t("common.save")}</Button>
+                  <Button variant="outline" onClick={() => setEditMode(false)}>{t("common.cancel")}</Button>
                 </div>
               </div>
             ) : (
               <div className="space-y-4">
                 {photoUrl && <img src={photoUrl} alt="Avatar" className="w-24 h-24 rounded-full object-cover border" />}
-                <div><p className="text-sm text-muted-foreground">Username</p><p className="font-medium">@{profile?.username}</p></div>
-                <div><p className="text-sm text-muted-foreground">Name</p><p className="font-medium">{name || "Not set"}</p></div>
-                <div><p className="text-sm text-muted-foreground">Bio</p><p className="font-medium">{bio || "Not set"}</p></div>
+                <div><p className="text-sm text-muted-foreground">{t("dashboard.username")}</p><p className="font-medium">@{profile?.username}</p></div>
+                <div><p className="text-sm text-muted-foreground">{t("dashboard.name")}</p><p className="font-medium">{name || t("common.notSet")}</p></div>
+                <div><p className="text-sm text-muted-foreground">{t("dashboard.bio")}</p><p className="font-medium">{bio || t("common.notSet")}</p></div>
               </div>
             )}
           </CardContent>
@@ -332,7 +336,7 @@ const Dashboard = () => {
 
         {revenueData.length > 0 && (
           <Card className="mb-8">
-            <CardHeader><CardTitle>Total Revenue Growth</CardTitle></CardHeader>
+            <CardHeader><CardTitle>{t("dashboard.revenueGrowth")}</CardTitle></CardHeader>
             <CardContent><RevenueChart data={revenueData} /></CardContent>
           </Card>
         )}
@@ -340,13 +344,13 @@ const Dashboard = () => {
         <Card>
           <CardHeader>
             <div className="flex items-center justify-between">
-              <div><CardTitle>Your Startups</CardTitle></div>
-              <Button onClick={() => navigate("/new-startup")}><Plus className="w-4 h-4 mr-2" /> Add Startup</Button>
+              <div><CardTitle>{t("dashboard.yourStartups")}</CardTitle></div>
+              <Button onClick={() => navigate("/new-startup")}><Plus className="w-4 h-4 mr-2" /> {t("dashboard.addStartup")}</Button>
             </div>
           </CardHeader>
           <CardContent>
             {startups.length === 0 ? (
-              <div className="text-center py-8"><p className="text-muted-foreground">No startups added yet</p></div>
+              <div className="text-center py-8"><p className="text-muted-foreground">{t("dashboard.noStartups")}</p></div>
             ) : (
               <div className="space-y-4">
                 {startups.map((startup) => (
@@ -354,10 +358,10 @@ const Dashboard = () => {
                     <CardContent className="pt-6">
                       {editingStartupId === startup.id ? (
                         <div className="space-y-4">
-                          <Input value={startupName} onChange={(e) => setStartupName(e.target.value)} placeholder="Startup name" />
+                          <Input value={startupName} onChange={(e) => setStartupName(e.target.value)} placeholder={t("dashboard.startupNamePlaceholder")} />
                           <div className="flex gap-2">
-                            <Button onClick={handleUpdateStartup}>Save Changes</Button>
-                            <Button variant="outline" onClick={cancelEditingStartup}>Cancel</Button>
+                            <Button onClick={handleUpdateStartup}>{t("common.save")}</Button>
+                            <Button variant="outline" onClick={cancelEditingStartup}>{t("common.cancel")}</Button>
                           </div>
                         </div>
                       ) : (
