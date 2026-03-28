@@ -115,7 +115,7 @@ export default function Leaderboards() {
             <span>{t("leaderboards.backHome")}</span>
           </Link>
           <Link to="/" className="flex items-center">
-            <img src="/logo.svg" alt="Founder Page" className="w-36 h-auto" />
+            <img src="/logo.svg" alt="Founder Page" className="w-56 h-auto" />
           </Link>
         </div>
       </header>
