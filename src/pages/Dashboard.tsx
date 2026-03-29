@@ -314,38 +314,38 @@ const Dashboard = () => {
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
-        <div className="container mx-auto px-4 py-4">
+        <div className="container mx-auto px-4 py-3">
           <div className="flex items-center justify-between">
-            <div className="flex items-center gap-2 cursor-pointer" onClick={() => navigate("/")}>
-              <img src="/logo.svg" className="w-36 h-auto" alt="Logo"/>
+            <div className="flex items-center cursor-pointer" onClick={() => navigate("/")}>
+              <img src="/logo.svg" className="w-32 sm:w-36 h-auto" alt="Logo"/>
             </div>
-            <div className="flex items-center gap-4">
+            <div className="flex items-center gap-2 sm:gap-4">
               {isAdmin && (
-                <Button variant="outline" size="sm" onClick={() => navigate("/admin")} className="border-destructive text-destructive">
+                <Button variant="outline" size="sm" onClick={() => navigate("/admin")} className="border-destructive text-destructive hidden sm:flex">
                   <Shield className="w-4 h-4 mr-2" /> {t("dashboard.admin")}
                 </Button>
               )}
               {profile && (
-                <Button variant="outline" size="sm" onClick={() => window.open(`/${profile.username}`, "_blank")}>
+                <Button variant="outline" size="sm" onClick={() => window.open(`/${profile.username}`, "_blank")} className="hidden sm:flex">
                   <ExternalLink className="w-4 h-4 mr-2" /> {t("dashboard.viewMyPage")}
                 </Button>
               )}
               <LanguageSelector />
               <Button variant="ghost" size="sm" onClick={handleSignOut}>
-                <LogOut className="w-4 h-4 mr-2" /> {t("common.signOut")}
+                <LogOut className="w-4 h-4" />
+                <span className="hidden sm:inline ml-2">{t("common.signOut")}</span>
               </Button>
             </div>
           </div>
         </div>
       </header>
 
-      <main className="container mx-auto px-4 py-8 max-w-4xl">
-        <h1 className="text-3xl font-bold mb-4">{t("dashboard.title")}</h1>
+      <main className="container mx-auto px-4 py-6 sm:py-8 max-w-4xl">
+        <h1 className="text-2xl sm:text-3xl font-bold mb-4">{t("dashboard.title")}</h1>
 
         {profile && (
-          <div className="flex items-center gap-2 mb-8 p-3 rounded-lg bg-muted/50 border border-border">
-            <span className="text-sm text-muted-foreground shrink-0">{t("dashboard.yourLink")}:</span>
-            <code className="text-sm font-medium flex-1 truncate">founderpage.xyz/{profile.username}</code>
+          <div className="flex items-center gap-2 mb-6 sm:mb-8 p-2 sm:p-3 rounded-lg bg-muted/50 border border-border">
+            <code className="text-xs sm:text-sm font-medium flex-1 truncate">founderpage.xyz/{profile.username}</code>
             <Button
               variant="ghost"
               size="sm"

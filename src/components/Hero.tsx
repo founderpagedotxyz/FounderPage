@@ -103,16 +103,16 @@ const Hero = () => {
             </div>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-5xl md:text-7xl font-bold text-center mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
+          <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl md:text-7xl font-bold text-center mb-4 sm:mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
 
-          <motion.p variants={itemVariants} className="text-xl text-gray-600-foreground text-center mb-12 max-w-3xl mx-auto">
+          <motion.p variants={itemVariants} className="text-base sm:text-xl text-gray-600-foreground text-center mb-8 sm:mb-12 max-w-3xl mx-auto px-2">
             {t("hero.subtitle")}
           </motion.p>
 
-          <motion.div variants={itemVariants} className="max-w-2xl w-full mx-auto mb-16">
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+          <motion.div variants={itemVariants} className="max-w-2xl w-full mx-auto mb-10 sm:mb-16 px-2">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
               <div className="relative w-full">
-                <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-lg pointer-events-none select-none">
+                <span className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-sm sm:text-lg pointer-events-none select-none">
                   founderpage.xyz/
                 </span>
                 <Input
@@ -120,14 +120,12 @@ const Hero = () => {
                   placeholder={t("hero.placeholder")}
                   value={username}
                   onChange={(e) => setUsername(e.target.value)}
-                  className="h-14 text-lg pl-[180px] bg-card border-2 placeholder:text-lg"
+                  className="h-12 sm:h-14 text-base sm:text-lg pl-[145px] sm:pl-[180px] bg-card border-2 placeholder:text-base sm:placeholder:text-lg"
                 />
               </div>
-              <motion.div>
-                <Button onClick={handleClaim} size="lg" className="h-14 px-8 text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap transition-all">
-                  {t("hero.claimBtn")}
-                </Button>
-              </motion.div>
+              <Button onClick={handleClaim} size="lg" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap transition-all w-full sm:w-auto">
+                {t("hero.claimBtn")}
+              </Button>
             </div>
           </motion.div>
 
@@ -155,7 +153,7 @@ const Hero = () => {
       <FeaturedFounders />
 
       {/* --- HOW IT WORKS --- */}
-      <section className="px-4 py-32 bg-card/50 overflow-hidden relative">
+      <section className="px-4 py-16 sm:py-32 bg-card/50 overflow-hidden relative">
         <div className="absolute inset-0 bg-gradient-to-b from-background via-transparent to-background pointer-events-none" />
         <div className="max-w-6xl mx-auto relative z-10">
           <motion.h2 
@@ -199,7 +197,7 @@ const Hero = () => {
       </section>
 
       {/* --- FEATURES DETAIL --- */}
-      <section className="px-4 py-32 bg-background">
+      <section className="px-4 py-16 sm:py-32 bg-background">
         <div className="max-w-6xl mx-auto">
           <motion.h2 
             initial={{ opacity: 0, y: 20 }}
@@ -245,7 +243,7 @@ const Hero = () => {
       </section>
 
       {/* --- PRICING SECTION --- */}
-      <section id="pricing" className="px-4 py-32 bg-gradient-to-b from-background to-card/30">
+      <section id="pricing" className="px-4 py-16 sm:py-32 bg-gradient-to-b from-background to-card/30">
         <div className="max-w-6xl mx-auto">
           <div className="text-center mb-16 max-w-3xl mx-auto">
             <h2 className="text-4xl md:text-6xl font-bold mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t("hero.pricingTitle") }} />
@@ -398,32 +396,30 @@ const Hero = () => {
         waveOpacity={0.6}
         blur={20}
         speed="fast"
-        containerClassName="flex flex-col items-center justify-center px-4 py-24 h-auto min-h-[500px]"
+        containerClassName="flex flex-col items-center justify-center px-4 py-16 sm:py-24 h-auto min-h-[400px] sm:min-h-[500px]"
         className="max-w-4xl w-full mx-auto"
       >
-        <motion.div 
+        <motion.div
           initial={{ opacity: 0, scale: 0.95 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ duration: 0.5 }}
-          className="text-center"
+          className="text-center px-2"
         >
-          <h2 className="text-4xl md:text-5xl font-bold mb-6">{t("hero.ctaTitle")}</h2>
-          <p className="text-xl text-muted-foreground mb-12">{t("hero.ctaSubtitle")}</p>
+          <h2 className="text-2xl sm:text-4xl md:text-5xl font-bold mb-4 sm:mb-6">{t("hero.ctaTitle")}</h2>
+          <p className="text-base sm:text-xl text-muted-foreground mb-8 sm:mb-12">{t("hero.ctaSubtitle")}</p>
           <div className="max-w-2xl mx-auto mb-8">
-            <div className="flex flex-col sm:flex-row gap-4 items-center justify-center">
+            <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 items-center justify-center">
               <div className="flex-1 w-full">
                 <div className="relative w-full">
-                  <span className="absolute left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-lg pointer-events-none select-none">founderpage.xyz/</span>
-                  <Input type="text" placeholder={t("hero.placeholder")} value={username} onChange={(e) => setUsername(e.target.value)} className="h-14 text-lg pl-[180px] bg-card border-2 placeholder:text-lg" />
+                  <span className="absolute left-3 sm:left-4 top-1/2 -translate-y-1/2 text-muted-foreground text-sm sm:text-lg pointer-events-none select-none">founderpage.xyz/</span>
+                  <Input type="text" placeholder={t("hero.placeholder")} value={username} onChange={(e) => setUsername(e.target.value)} className="h-12 sm:h-14 text-base sm:text-lg pl-[145px] sm:pl-[180px] bg-card border-2 placeholder:text-base sm:placeholder:text-lg" />
                 </div>
               </div>
-              <motion.div>
-                <Button onClick={handleClaim} size="lg" className="h-14 px-8 text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap">{t("hero.claimBtn")}</Button>
-              </motion.div>
+              <Button onClick={handleClaim} size="lg" className="h-12 sm:h-14 px-6 sm:px-8 text-base sm:text-lg bg-accent hover:bg-accent/90 text-accent-foreground font-semibold whitespace-nowrap w-full sm:w-auto">{t("hero.claimBtn")}</Button>
             </div>
           </div>
-          <div className="flex flex-wrap items-center justify-center gap-6 text-sm text-muted-foreground">
+          <div className="flex flex-wrap items-center justify-center gap-4 sm:gap-6 text-xs sm:text-sm text-muted-foreground">
             <div className="flex items-center gap-2"><Check className="w-4 h-4 text-accent" />{t("hero.ctaFree")}</div>
             <div className="flex items-center gap-2"><Check className="w-4 h-4 text-accent" />{t("hero.ctaNoCard")}</div>
             <div className="flex items-center gap-2"><Check className="w-4 h-4 text-accent" />{t("hero.ctaSetup")}</div>

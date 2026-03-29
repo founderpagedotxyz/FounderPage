@@ -182,12 +182,12 @@ const Profile = () => {
         <link rel="canonical" href={`https://founderpage.xyz/${profile?.username}`} />
         {profile.favicon_url && <link rel="icon" href={profile.favicon_url} />}
       </Helmet>
-      <main className="container mx-auto px-4 py-12 max-w-5xl">
+      <main className="container mx-auto px-4 py-8 sm:py-12 max-w-5xl">
         {/* Profile Header */}
-        <div className="flex flex-col md:flex-row gap-8 mb-12">
+        <div className="flex flex-col items-center text-center md:items-start md:text-left md:flex-row gap-6 sm:gap-8 mb-8 sm:mb-12">
           <div className="flex-shrink-0">
             <div
-              className="w-32 h-32 rounded-full overflow-hidden"
+              className="w-24 h-24 sm:w-32 sm:h-32 rounded-full overflow-hidden mx-auto md:mx-0"
               style={{ backgroundColor: `hsl(${themeStyles["--profile-accent"]} / 0.2)` }}
             >
               {profile.photo_url ? (
@@ -204,7 +204,7 @@ const Profile = () => {
           </div>
 
           <div className="flex-1">
-            <h1 className="text-4xl font-bold mb-2">{profile.name || profile.username}</h1>
+            <h1 className="text-2xl sm:text-4xl font-bold mb-2">{profile.name || profile.username}</h1>
             {profile.location && (
               <p className="flex items-center gap-2 mb-4" style={{ color: `hsl(${themeStyles["--profile-foreground"]} / 0.6)` }}>
                 <MapPin className="w-4 h-4" />
