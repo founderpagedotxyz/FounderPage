@@ -341,10 +341,7 @@ export const ThemeSelector = ({
   plan,
 }: ThemeSelectorProps) => {
   const { t } = useTranslation();
-  const premium = isPremium(plan);
-  const visibleThemes = premium
-    ? Object.entries(THEMES)
-    : Object.entries(THEMES).slice(0, FREE_LIMITS.maxThemes);
+  const visibleThemes = Object.entries(THEMES);
   return (
     <div className="space-y-6">
       <div className="space-y-3">
@@ -384,9 +381,6 @@ export const ThemeSelector = ({
             </div>
           ))}
         </RadioGroup>
-        {!premium && (
-          <UpgradePrompt feature={t("upgrade.themesLimited")} compact />
-        )}
       </div>
 
       <div className="space-y-3">
