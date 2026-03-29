@@ -26,6 +26,7 @@ export type Database = {
           location: string | null
           name: string | null
           photo_url: string | null
+          plan: string | null
           theme: string | null
           updated_at: string | null
           username: string
@@ -41,6 +42,7 @@ export type Database = {
           location?: string | null
           name?: string | null
           photo_url?: string | null
+          plan?: string | null
           theme?: string | null
           updated_at?: string | null
           username: string
@@ -56,6 +58,7 @@ export type Database = {
           location?: string | null
           name?: string | null
           photo_url?: string | null
+          plan?: string | null
           theme?: string | null
           updated_at?: string | null
           username?: string

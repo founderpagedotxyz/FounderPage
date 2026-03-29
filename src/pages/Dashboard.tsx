@@ -31,6 +31,8 @@ import { ThemeSelector, ThemeKey, FontKey } from "@/components/ThemeSelector";
 import { LanguageSelector } from "@/components/LanguageSelector";
 import { StatsPanel } from "@/components/StatsPanel";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { isPremium, FREE_LIMITS } from "@/hooks/usePlan";
+import { UpgradePrompt } from "@/components/UpgradePrompt";
 
 type Profile = Database["public"]["Tables"]["profiles"]["Row"];
 type Startup = Database["public"]["Tables"]["startups"]["Row"];
@@ -311,6 +313,8 @@ const Dashboard = () => {
     );
   }
 
+  const userPlan = (profile as any)?.plan || "free";
+
   return (
     <div className="min-h-screen bg-background">
       <header className="border-b border-border">
@@ -384,7 +388,7 @@ const Dashboard = () => {
           </TabsList>
 
           <TabsContent value="stats">
-            {profile && <StatsPanel profileId={profile.id} />}
+            {profile && <StatsPanel profileId={profile.id} plan={userPlan} />}
           </TabsContent>
 
           <TabsContent value="style">
@@ -393,7 +397,7 @@ const Dashboard = () => {
                 <CardTitle>{t("dashboard.pageCustomization")}</CardTitle>
               </CardHeader>
               <CardContent>
-                <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} />
+                <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} plan={userPlan} />
                 <div className="mt-6">
                   <Button onClick={handleSaveStyle}>{t("common.save")}</Button>
                 </div>
@@ -435,7 +439,7 @@ const Dashboard = () => {
                     <Palette className="w-5 h-5 text-accent" />
                     <h3 className="font-semibold">{t("dashboard.pageCustomization")}</h3>
                   </div>
-                  <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} />
+                  <ThemeSelector selectedTheme={theme} selectedFont={fontFamily} onThemeChange={setTheme} onFontChange={setFontFamily} plan={userPlan} />
                 </div>
                 <div className="flex gap-2">
                   <Button onClick={handleUpdateProfile}>{t("common.save")}</Button>
@@ -464,7 +468,11 @@ const Dashboard = () => {
           <CardHeader>
             <div className="flex items-center justify-between">
               <div><CardTitle>{t("dashboard.yourStartups")}</CardTitle></div>
-              <Button onClick={() => navigate("/new-startup")}><Plus className="w-4 h-4 mr-2" /> {t("dashboard.addStartup")}</Button>
+              {!isPremium(userPlan) && startups.length >= FREE_LIMITS.maxStartups ? (
+                <UpgradePrompt feature={t("upgrade.startupsLimited")} />
+              ) : (
+                <Button onClick={() => navigate("/new-startup")}><Plus className="w-4 h-4 mr-2" /> {t("dashboard.addStartup")}</Button>
+              )}
             </div>
           </CardHeader>
           <CardContent>

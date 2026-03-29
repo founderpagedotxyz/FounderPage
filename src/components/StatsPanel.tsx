@@ -5,9 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Eye, MousePointerClick, Users, Globe } from "lucide-react";
 import { Area, AreaChart, XAxis, YAxis, ResponsiveContainer, Tooltip } from "recharts";
+import { isPremium } from "@/hooks/usePlan";
+import { UpgradePrompt } from "@/components/UpgradePrompt";
 
 interface StatsPanelProps {
   profileId: string;
+  plan?: string | null;
 }
 
 type TimeRange = "7" | "30" | "90";
@@ -24,7 +27,7 @@ interface SourceData {
   count: number;
 }
 
-export const StatsPanel = ({ profileId }: StatsPanelProps) => {
+export const StatsPanel = ({ profileId, plan }: StatsPanelProps) => {
   const { t } = useTranslation();
   const [range, setRange] = useState<TimeRange>("7");
   const [dailyData, setDailyData] = useState<DailyData[]>([]);
@@ -140,8 +143,8 @@ export const StatsPanel = ({ profileId }: StatsPanelProps) => {
           </SelectTrigger>
           <SelectContent>
             <SelectItem value="7">{t("stats.days7")}</SelectItem>
-            <SelectItem value="30">{t("stats.days30")}</SelectItem>
-            <SelectItem value="90">{t("stats.days90")}</SelectItem>
+            <SelectItem value="30" disabled={!isPremium(plan)}>{t("stats.days30")}</SelectItem>
+            <SelectItem value="90" disabled={!isPremium(plan)}>{t("stats.days90")}</SelectItem>
           </SelectContent>
         </Select>
       </div>
@@ -160,6 +163,10 @@ export const StatsPanel = ({ profileId }: StatsPanelProps) => {
           </Card>
         ))}
       </div>
+
+      {!isPremium(plan) && (
+        <UpgradePrompt feature={t("upgrade.statsLimited")} />
+      )}
 
       {/* Visitors chart */}
       <Card>

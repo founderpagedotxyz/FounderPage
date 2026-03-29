@@ -2,6 +2,8 @@ import { useTranslation } from "react-i18next";
 import { Label } from "@/components/ui/label";
 import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { isPremium, FREE_LIMITS } from "@/hooks/usePlan";
+import { UpgradePrompt } from "@/components/UpgradePrompt";
 
 // Beautiful balanced color themes
 export const THEMES = {
@@ -328,6 +330,7 @@ interface ThemeSelectorProps {
   selectedFont: FontKey;
   onThemeChange: (theme: ThemeKey) => void;
   onFontChange: (font: FontKey) => void;
+  plan?: string | null;
 }
 
 export const ThemeSelector = ({
@@ -335,8 +338,13 @@ export const ThemeSelector = ({
   selectedFont,
   onThemeChange,
   onFontChange,
+  plan,
 }: ThemeSelectorProps) => {
   const { t } = useTranslation();
+  const premium = isPremium(plan);
+  const visibleThemes = premium
+    ? Object.entries(THEMES)
+    : Object.entries(THEMES).slice(0, FREE_LIMITS.maxThemes);
   return (
     <div className="space-y-6">
       <div className="space-y-3">
@@ -346,7 +354,7 @@ export const ThemeSelector = ({
           onValueChange={(value) => onThemeChange(value as ThemeKey)}
           className="grid grid-cols-3 sm:grid-cols-5 lg:grid-cols-6 gap-3"
         >
-          {Object.entries(THEMES).map(([key, theme]) => (
+          {visibleThemes.map(([key, theme]) => (
             <div key={key} className="relative">
               <RadioGroupItem
                 value={key}
@@ -376,6 +384,9 @@ export const ThemeSelector = ({
             </div>
           ))}
         </RadioGroup>
+        {!premium && (
+          <UpgradePrompt feature={t("upgrade.themesLimited")} compact />
+        )}
       </div>
 
       <div className="space-y-3">

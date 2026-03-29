@@ -285,6 +285,15 @@
     "days90": "90 dias",
     "noData": "Sem dados ainda. Partilha o teu perfil para começar a rastrear!"
   },
+  "upgrade": {
+    "btn": "Melhorar",
+    "unlock": "Melhorar",
+    "description": "Melhora o teu plano para desbloquear esta funcionalidade sem limites.",
+    "statsLimited": "Plano grátis: as estatísticas reiniciam após 7 dias. Melhora para histórico ilimitado.",
+    "themesLimited": "Plano grátis: 8 temas básicos. Melhora para desbloquear 30+ temas premium.",
+    "revenueLimited": "Plano grátis: dados de receita mantidos 7 dias. Melhora para histórico completo.",
+    "startupsLimited": "Plano grátis: até 3 startups. Melhora para ilimitadas."
+  },
   "supportPage": {
     "title": "Suporte",
     "subtitle": "Tens uma pergunta, encontraste um bug ou precisas de ajuda? Estamos aqui para ti.",

@@ -285,6 +285,15 @@
     "days90": "90 days",
     "noData": "No data yet. Share your profile to start tracking!"
   },
+  "upgrade": {
+    "btn": "Upgrade",
+    "unlock": "Upgrade",
+    "description": "Upgrade to unlock this feature with no limits.",
+    "statsLimited": "Free plan: stats reset after 7 days. Upgrade for unlimited history.",
+    "themesLimited": "Free plan: 8 basic themes. Upgrade to unlock 30+ premium themes.",
+    "revenueLimited": "Free plan: revenue data kept for 7 days. Upgrade for full history.",
+    "startupsLimited": "Free plan: up to 3 startups. Upgrade for unlimited."
+  },
   "supportPage": {
     "title": "Support",
     "subtitle": "Have a question, found a bug, or need help? We're here for you.",
