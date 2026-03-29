@@ -88,7 +88,7 @@ const Hero = () => {
         waveOpacity={0.6}
         blur={20}
         speed="fast"
-        containerClassName="flex flex-col items-center justify-center px-4 py-20"
+        containerClassName="flex flex-col items-center justify-center px-4 pt-28 pb-12 sm:py-20"
         className="max-w-6xl w-full"
       >
         <motion.div
@@ -97,15 +97,15 @@ const Hero = () => {
           animate="visible"
           className="flex flex-col items-center w-full"
         >
-          <motion.div variants={itemVariants} className="flex items-center justify-center gap-6 mb-12">
-            <div className="flex items-center gap-2 px-4 py-2 rounded-full border border-muted bg-card/50 backdrop-blur-sm">
-              <span className="text-sm font-medium text-muted-foreground">{t("hero.badge")}</span>
+          <motion.div variants={itemVariants} className="flex items-center justify-center gap-6 mb-6 sm:mb-12">
+            <div className="flex items-center gap-2 px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-muted bg-card/50 backdrop-blur-sm">
+              <span className="text-xs sm:text-sm font-medium text-muted-foreground">{t("hero.badge")}</span>
             </div>
           </motion.div>
 
-          <motion.h1 variants={itemVariants} className="text-3xl sm:text-5xl md:text-7xl font-bold text-center mb-4 sm:mb-6 leading-tight" dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
+          <motion.h1 variants={itemVariants} className="text-2xl sm:text-5xl md:text-7xl font-bold text-center mb-3 sm:mb-6 leading-tight px-2" dangerouslySetInnerHTML={{ __html: t("hero.title") }} />
 
-          <motion.p variants={itemVariants} className="text-base sm:text-xl text-gray-600-foreground text-center mb-8 sm:mb-12 max-w-3xl mx-auto px-2">
+          <motion.p variants={itemVariants} className="text-sm sm:text-xl text-muted-foreground text-center mb-6 sm:mb-12 max-w-3xl mx-auto px-4">
             {t("hero.subtitle")}
           </motion.p>
 
